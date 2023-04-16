@@ -1,2 +1,2 @@
-# Sistema Administrativo (8, 9 ou 10)
+# Sistema Administrativo
 [Acesse:](https://tecnosisweb.com.br/sysadm)
