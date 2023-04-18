@@ -39,11 +39,11 @@
                                         <td>{{ $emp->nome }}</td>
                                         <td>{{ $emp->nome_contato }}</td>
                                         <td>{{ $emp->email }}</td>
-                                        <td>{{ $emp->celular }}</td>
+                                        <td>{{ mascara($emp->celular, '(##)#####-####') }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-success"><i class="nav-icon far fa-eye"></i></a>
-                                            <a href="#" class="btn btn-sm btn-primary"><i class="nav-icon far fa-edit"></i></a>
-                                            <a href="#" class="btn btn-sm btn-danger"><i class="nav-icon fas fa-trash-alt"></i></a>
+                                            <a href="{{ route('empresas.show', $emp) }}" class="btn btn-sm btn-success"><i class="nav-icon far fa-eye"></i></a>
+                                            <a href="{{ route('empresas.edit', $emp) }}" class="btn btn-sm btn-primary"><i class="nav-icon far fa-edit"></i></a>
+                                            <a href="{{ route('empresas.destroy', $emp) }}" class="btn btn-sm btn-danger"><i class="nav-icon fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                 @empty

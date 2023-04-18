@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Novo ' . $tipo)
+@section('title',  $empresa->tipo)
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('empresas.index') }}?tipo={{ $tipo }}">Listagem</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('empresas.index') }}?tipo={{ $empresa->tipo }}">Listagem</a></li>
 @endsection
 
 @section('content')
@@ -15,20 +15,10 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Entre com os dados do {{ $tipo }}</h3>
+                            <h3 class="card-title">Detalhes do {{ $empresa->tipo .'.: '. $empresa->nome}}</h3>
                         </div>
                         <div class="card-body">
-                            <div class="card card-info">
-                                <div class="card-header">
-                                    <h3 class="card-title">Cadastro</h3>
-                                </div>
-                                <form method="post" action="{{ route('empresas.store') }}">
-                                    @csrf
-                                    @include('empresa.form')
-
-                                    <input type="hidden" name="tipo" value="{{ $tipo }}">
-                                </form>
-                            </div>
+                            @include('empresa.details')
                         </div>
 
                         <!-- /.card-body -->

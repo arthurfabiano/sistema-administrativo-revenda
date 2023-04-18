@@ -4,64 +4,66 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmpresaRequest;
 use App\Models\Empresa;
+use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class EmpresaController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param string $tipo
+     * @return void
      */
-    public function index(Request $request)
+    private function validaTipo(string $tipo): Void
+    {
+        if ($tipo !== 'cliente' && $tipo !== 'fornecedor') {
+           \abort(404);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return View
+     */
+    public function index(Request $request): View
     {
         $tipo = $request->tipo;
-        if ($tipo !== 'cliente' && $tipo !== 'fornecedor') {
-            return \abort(404);
-        }
+        $this->validaTipo($request->tipo);
 
-        $empresas = Empresa::todasPorTipo($tipo);
+        $empresas = Empresa::todasPorTipo($request->tipo);
 
         return view('empresa.index', compact('empresas', 'tipo'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return View
      */
-    public function create(Request $request)
+    public function create(Request $request): View
     {
-        $tipo = $request->tipo;
-        if ($tipo !== 'cliente' && $tipo !== 'fornecedor') {
-            return \abort(404);
-        }
+        $this->validaTipo($request->tipo);
 
-        return view('empresa.create', compact('tipo'));
+        return view('empresa.create', ['tipo' => $request->tipo]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param EmpresaRequest $request
+     * @return Response
      */
-    public function store(EmpresaRequest $request)
+    public function store(EmpresaRequest $request): Response
     {
         $empresa = Empresa::create($request->all());
 
-        return redirect()->route('empresas.show', $empresa->id);
+        return \redirect()->route('empresas.show', $empresa->id);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Empresa $empresa
+     * @return View
      */
-    public function show($id)
+    public function show(Empresa $empresa): View
     {
-        return "Estou no show";
+        return view('empresa.show', compact('empresa'));
     }
 
     /**
@@ -70,31 +72,34 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Empresa $empresa): View
     {
-        //
+        return view('empresa.edit', compact('empresa'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param EmpresaRequest $request
+     * @param Empresa $empresa
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(EmpresaRequest $request, Empresa $empresa): Response
     {
-        //
+        $empresa->update($request->all());
+
+        return redirect()->route('empresa.show', $empresa);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Empresa $empresa
+     * @param Request $request
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy(Empresa $empresa, Request $request)
     {
-        //
+        $this->validaTipo($request->tipo);
+
+        $empresa->delete();
+
+        return redirect()->route('empresas.index', ['tipo' => $request->tipo]);
     }
 }
