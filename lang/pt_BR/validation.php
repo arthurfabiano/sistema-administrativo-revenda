@@ -138,7 +138,9 @@ return [
     'unique'               => 'O campo :attribute já está sendo utilizado.',
     'uploaded'             => 'Ocorreu uma falha no upload do campo :attribute.',
     'url'                  => 'O campo :attribute tem um formato inválido.',
-    'uuid' => 'O campo :attribute deve ser um UUID válido.',
+    'uuid'                 => 'O campo :attribute deve ser um UUID válido.',
+    'cpf'                  => 'O campo CPF não é valido.',
+    'cnpj'                 => 'O campo CNPJ não é valido.',
 
     /*
     |--------------------------------------------------------------------------
