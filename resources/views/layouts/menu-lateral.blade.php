@@ -38,13 +38,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="../../index.html" class="nav-link">
+                            <a href="{{ route('empresas.create') }}?tipo=fornecedor" class="nav-link">
                                 <i class="far fa-file nav-icon"></i>
                                 <p>Novo Fornecedor</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../../index2.html" class="nav-link">
+                            <a href="{{ route('empresas.index') }}?tipo=fornecedor" class="nav-link">
                                 <i class="far fa-list-alt nav-icon"></i>
                                 <p>Lista de Fornecedores</p>
                             </a>
@@ -62,13 +62,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="../../index.html" class="nav-link">
+                            <a href="{{ route('empresas.create') }}?tipo=cliente" class="nav-link">
                                 <i class="far fa-file nav-icon"></i>
                                 <p>Novo Cliente</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../../index2.html" class="nav-link">
+                            <a href="{{ route('empresas.index') }}?tipo=cliente" class="nav-link">
                                 <i class="far fa-list-alt nav-icon"></i>
                                 <p>Lista de Clientes</p>
                             </a>
