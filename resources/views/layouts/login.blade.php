@@ -28,7 +28,6 @@
     @vite(['resources/adminLTE/plugins/jquery/jquery.min.js',
         'resources/adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js',
         'resources/adminLTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js',
-        'resources/adminLTE/dist/js/adminlte.min.js">',
-        'resources/adminLTE/dist/js/demo.js'])
+        'resources/adminLTE/dist/js/adminlte.min.js">'])
 </body>
 </html>
