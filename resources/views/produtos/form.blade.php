@@ -1,19 +1,33 @@
-<div class="input-group {{ $errors->has('nome') ? 'has-error' : ''}}">
-    <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-building"></i></span>
+<div class="row mb-3">
+    <div class="col-lg-12">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-building"></i></span>
+            </div>
+            <input type="text" name="nome" class="form-control @error('nome') is-invalid @enderror" value="{{ old('nome', @$produto->nome) }}" placeholder="Nome Empresa*" required maxlength="255">
+            @error('nome')
+            <span class="error invalid-feedback">{{ $message }}</span>
+            @enderror
+        </div>
     </div>
-    <input class="form-control" name="nome" type="text" id="nome" value="{{ isset($produto->nome) ? $produto->nome : ''}}" required>
-    {!! $errors->first('nome', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="input-group {{ $errors->has('descricao') ? 'has-error' : ''}}">
-    <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-building"></i></span>
-    </div>
-    <textarea class="form-control" rows="5" name="descricao" type="textarea" id="descricao" >{{ isset($produto->descricao) ? $produto->descricao : ''}}</textarea>
-    {!! $errors->first('descricao', '<p class="help-block">:message</p>') !!}
 </div>
 
-
-<div class="form-group">
-    <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Atualizar' : 'Novo' }}">
+<div class="row mb-3">
+    <div class="col-lg-12">
+        <div class="form-group">
+            <label>Descricao.:</label>
+            <textarea rows="4" name="descricao" class="form-control @error('descricao') is-invalid @enderror" placeholder="Digite aqui seu texto...">{{ old('descricao', @$produto->descricao) }}</textarea>
+            @error('descricao')
+            <span class="error invalid-feedback">{{ $message }}</span>
+            @enderror
+        </div>
+        <!-- /input-group -->
+    </div>
 </div>
+
+<hr>
+
+<div class="input-group">
+    <button type="submit" class="btn btn-success"><i class="nav-icon fas fa-plus"></i> {{ $formMode === 'edit' ? 'Atualizar' : 'Novo' }}</button>
+</div>
+

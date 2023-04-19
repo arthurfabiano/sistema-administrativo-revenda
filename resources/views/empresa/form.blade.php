@@ -28,8 +28,8 @@
                     <span class="input-group-text"><i class="far fa-file"></i></span>
                 </div>
                 <input type="text" name="documento" class="cpf_cnpj form-control @error('documento') is-invalid @enderror"
-                       value="@if (strlen($empresa->documento) === 11) {{ old('documento', mascara($empresa->documento, '###.###.###-##')) }}
-                       @else {{ old('documento', mascara($empresa->documento, '##.###.###/####-##')) }} @endif"
+                       value="@if (strlen(@$empresa->documento) === 11) {{ old('documento', mascara(@$empresa->documento, '###.###.###-##')) }}
+                       @else {{ old('documento', mascara(@$empresa->documento, '##.###.###/####-##')) }} @endif"
                        placeholder="CPF/CNPJ*" required maxlength="14">
                 @error('documento')
                 <span class="error invalid-feedback">{{ $message }}</span>

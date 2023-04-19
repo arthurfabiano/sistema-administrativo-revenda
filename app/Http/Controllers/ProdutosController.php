@@ -51,10 +51,10 @@ class ProdutosController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'nome' => 'required|255'
+			'nome' => 'required|max:255'
 		]);
         $requestData = $request->all();
-        
+
         Produto::create($requestData);
 
         return redirect('produtos')->with('flash_message', 'Produto added!');
@@ -99,10 +99,10 @@ class ProdutosController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-			'nome' => 'required|255'
+			'nome' => 'required|max:255'
 		]);
         $requestData = $request->all();
-        
+
         $produto = Produto::findOrFail($id);
         $produto->update($requestData);
 
