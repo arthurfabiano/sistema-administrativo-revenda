@@ -116,9 +116,9 @@ class ProdutosController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy($id)
+    public function destroy(Produto $produto)
     {
-        Produto::destroy($id);
+        $produto->delete();
 
         return redirect('produtos')->with('flash_message', 'Produto deleted!');
     }
