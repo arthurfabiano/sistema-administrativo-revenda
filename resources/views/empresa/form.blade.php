@@ -9,11 +9,8 @@
                 @error('nome')
                     <span class="error invalid-feedback">{{ $message }}</span>
                 @enderror
-
             </div>
-            <!-- /input-group -->
         </div>
-        <!-- /.col-lg-6 -->
         <div class="col-lg-6">
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -21,9 +18,7 @@
                 </div>
                 <input type="text" name="razao_social" class="form-control" value="{{ old('razao_social', @$empresa->razao_social) }}" placeholder="Razão Social" maxlength="255">
             </div>
-            <!-- /input-group -->
         </div>
-        <!-- /.col-lg-6 -->
     </div>
 
     <div class="row mb-3">
