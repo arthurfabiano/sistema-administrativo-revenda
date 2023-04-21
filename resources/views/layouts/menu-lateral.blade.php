@@ -116,6 +116,14 @@
                             </a>
                         </li>
                     </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('users.index') }}" class="nav-link">
+                                <i class="fas fa-users nav-icon"></i>
+                                <p>Usuários</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>

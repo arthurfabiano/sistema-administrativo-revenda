@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdutosController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,15 +19,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [LoginController::class, 'showLoginForm']);
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-Route::resource('/empresas', EmpresaController::class);
-Route::resource('/produtos', ProdutosController::class);
-
-Auth::routes();
-
 Route::get('/welcome', function () {
     return view('welcome');
 });
+
+Auth::routes(['register' => false]);
+
+Route::get('/', [LoginController::class, 'showLoginForm']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::resource('/empresas', EmpresaController::class);
+    Route::resource('/produtos', ProdutosController::class);
+    Route::resource('/users', UsersController::class);
+});
+
+
