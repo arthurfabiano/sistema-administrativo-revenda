@@ -19,17 +19,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [LoginController::class, 'showLoginForm']);
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-Route::resource('/empresas', EmpresaController::class);
-Route::resource('/produtos', ProdutosController::class);
-Route::resource('users', UsersController::class);
-
-
-Auth::routes();
-
 Route::get('/welcome', function () {
     return view('welcome');
 });
+
+Auth::routes(['register' => false]);
+
+Route::get('/', [LoginController::class, 'showLoginForm']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::resource('/empresas', EmpresaController::class);
+    Route::resource('/produtos', ProdutosController::class);
+    Route::resource('/users', UsersController::class);
+});
+
 
