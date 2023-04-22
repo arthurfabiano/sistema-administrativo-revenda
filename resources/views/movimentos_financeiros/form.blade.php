@@ -1,5 +1,5 @@
 <div class="row mb-3">
-    <div class="col-lg-6">
+    <div class="col-lg-4">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-edit"></i></span>
@@ -10,12 +10,28 @@
             @enderror
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-map"></i></span>
+            </div>
+            <select name="tipo" id="tipo" class="form-control @error('tipo') is-invalid @enderror" value="{{ old('tipo', @$movimentos_financeiro->tipo) }}" required>
+                <option value="">Selecione</option>
+                @foreach(tipo_movimentacao() as $sigla => $nome)
+                    <option {{ @$movimentos_financeiro->tipo == $sigla ? 'selected' : '' }} value="{{ $sigla }}">{{ $nome }}</option>"
+                @endforeach
+            </select>
+            @error('tipo')
+            <span class="error invalid-feedback">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
+    <div class="col-lg-4">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-building"></i></span>
             </div>
-            <input type="text" name="empresa_id" class="form-control @error('empresa_id') is-invalid @enderror" value="{{ old('empresa_id', @$movimentos_financeiro->empresa_id) }}" placeholder="Empresa*" required maxlength="255">
+            <select name="empresa_id" id="empresa-ajax" class="form-control" required></select>
             @error('empresa_id')
             <span class="error invalid-feedback">{{ $message }}</span>
             @enderror
@@ -42,22 +58,6 @@
             </div>
             <input type="text" name="data" class="data form-control @error('data') is-invalid @enderror" value="{{ old('data', @$movimentos_financeiro->data) }}" placeholder="data*" required maxlength="255">
             @error('data')
-            <span class="error invalid-feedback">{{ $message }}</span>
-            @enderror
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-map"></i></span>
-            </div>
-            <select name="tipo" class="form-control @error('tipo') is-invalid @enderror" value="{{ old('tipo', @$movimentos_financeiro->tipo) }}" required>
-                <option value="">Selecione</option>
-                @foreach(tipo_movimentacao() as $sigla => $nome)
-                    <option {{ @$movimentos_financeiro->tipo == $sigla ? 'selected' : '' }} value="{{ $sigla }}">{{ $nome }}</option>"
-                @endforeach
-            </select>
-            @error('tipo')
             <span class="error invalid-feedback">{{ $message }}</span>
             @enderror
         </div>
