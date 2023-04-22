@@ -14,23 +14,22 @@ class MovimentoFinanceiroController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $movimentos_financeiros = Movimentos_financeiro::where('descricao', 'LIKE', "%$keyword%")
-                ->orWhere('valor', 'LIKE', "%$keyword%")
-                ->orWhere('data', 'LIKE', "%$keyword%")
-                ->orWhere('tipo', 'LIKE', "%$keyword%")
-                ->orWhere('empresa_id', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $movimentos_financeiros = Movimentos_financeiro::latest()->paginate($perPage);
+        if (!$request->filled('data_inicial') || !$request->filled('data_final'))
+        {
+            return redirect()->route('movimentos_financeiros.index', [
+                'data_inicial' => (new \DateTime('first day of this month'))->format('d/m/Y'),
+                'data_final' => (new \DateTime('last day of this month'))->format('d/m/Y')
+            ]);
         }
+
+        $movimentos_financeiros = Movimentos_financeiro::buscaPorIntervalo(
+            data_br_para_iso($request->data_inicial),
+            data_br_para_iso($request->data_final)
+        );
 
         return view('movimentos_financeiros.index', compact('movimentos_financeiros'));
     }

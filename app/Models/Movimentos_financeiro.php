@@ -31,11 +31,29 @@ class Movimentos_financeiro extends Model
      */
     protected $fillable = ['descricao', 'valor', 'data', 'tipo', 'empresa_id'];
 
+    /**
+     * Metodo responsável com a relação com empresa
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function empresa()
     {
         return $this->belongsTo('App\Models\Empresa');
     }
 
+    /**
+     * Metodo responsável por buscar por intervalo de data
+     *
+     * @param string $inicio
+     * @param string $final
+     * @param $quantidade
+     * @return mixed
+     */
+    public static function buscaPorIntervalo(string $inicio, string $final, $quantidade = 20) {
+        return self::whereBetween('data', [$inicio, $final])
+            ->with('empresa')
+            ->paginate($quantidade);
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -63,6 +81,11 @@ class Movimentos_financeiro extends Model
     |--------------------------------------------------------------------------
     */
     public function getDescricaoAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function getTipoAttribute($value)
     {
         return ucfirst($value);
     }

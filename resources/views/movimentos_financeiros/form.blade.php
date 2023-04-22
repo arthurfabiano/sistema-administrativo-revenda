@@ -18,7 +18,7 @@
             <select name="tipo" id="tipo" class="form-control @error('tipo') is-invalid @enderror" value="{{ old('tipo', @$movimentos_financeiro->tipo) }}" required>
                 <option value="">Selecione</option>
                 @foreach(tipo_movimentacao() as $sigla => $nome)
-                    <option {{ @$movimentos_financeiro->tipo == $sigla ? 'selected' : '' }} value="{{ $sigla }}">{{ $nome }}</option>"
+                    <option {{ @$movimentos_financeiro->tipo == 'Entrada' ? 'selected' : '' }} value="{{ $sigla }}">{{ $nome }}</option>"
                 @endforeach
             </select>
             @error('tipo')
@@ -31,7 +31,11 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-building"></i></span>
             </div>
-            <select name="empresa_id" id="empresa-ajax" class="form-control" required></select>
+            <select name="empresa_id" id="empresa-ajax" class="form-control" required>
+                @if(isset($movimentos_financeiro))
+                    <option value="{{ $movimentos_financeiro->empresa->id }}">{{ $movimentos_financeiro->empresa->nome }} ({{ $movimentos_financeiro->empresa->razao_social }})</option>"
+                @endif
+            </select>
             @error('empresa_id')
             <span class="error invalid-feedback">{{ $message }}</span>
             @enderror
@@ -56,7 +60,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
             </div>
-            <input type="text" name="data" class="data form-control @error('data') is-invalid @enderror" value="{{ old('data', @$movimentos_financeiro->data) }}" placeholder="data*" required maxlength="255">
+            <input type="text" name="data" class="data form-control @error('data') is-invalid @enderror" value="{{ old('data', @data_iso_para_br($movimentos_financeiro->data)) }}" placeholder="data*" required maxlength="255">
             @error('data')
             <span class="error invalid-feedback">{{ $message }}</span>
             @enderror
