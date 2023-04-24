@@ -60,6 +60,19 @@ if (! function_exists('estados')) {
     }
 }
 
+/**
+ * Lista de estados
+ */
+if (! function_exists('tipo_movimentacao')) {
+    function tipo_movimentacao()
+    {
+        return [
+            'saida'=>'Saída',
+            'entrada'=>'Entrada'
+        ];
+    }
+}
+
 if (! function_exists('data_br_para_iso')) {
     function data_br_para_iso($data)
     {

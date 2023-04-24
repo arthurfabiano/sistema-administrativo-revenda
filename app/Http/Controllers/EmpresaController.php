@@ -48,13 +48,13 @@ class EmpresaController extends Controller
 
     /**
      * @param EmpresaRequest $request
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(EmpresaRequest $request): Response
     {
         $empresa = Empresa::create($request->all());
 
-        return \redirect()->route('empresas.show', $empresa->id);
+        return redirect()->route('empresas.show', $empresa->id);
     }
 
     /**
