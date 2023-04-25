@@ -46,6 +46,16 @@ class Empresa extends Model
     |--------------------------------------------------------------------------
     */
 
+    public static function buscaPorId(int $id)
+    {
+        return self::with([
+            'movimentosEstoque' => function($query) {
+                $query->latest()->take(15);
+            },
+            'movimentosEstoque.produto'
+        ])->findOrFail($id);
+    }
+
     /**
      * @param string $tipo
      * @param int $quantidade
@@ -73,6 +83,10 @@ class Empresa extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function movimentosEstoque()
+    {
+        return $this->hasMany(MovimentoEstoque::class);
+    }
 
 
     /*
@@ -95,13 +109,6 @@ class Empresa extends Model
     |--------------------------------------------------------------------------
     */
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
-
     /**
      * Cria acessor chamado text para serializacao
      *
@@ -115,4 +122,11 @@ class Empresa extends Model
             ucwords($this->attributes['tipo']),
         );
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | MUTATORS
+    |--------------------------------------------------------------------------
+    */
 }

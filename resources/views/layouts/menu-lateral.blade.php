@@ -110,9 +110,9 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('produtos.create') }}" class="nav-link">
+                            <a href="{{ route('produtos.index') }}" class="nav-link">
                                 <i class="fas fa-boxes nav-icon"></i>
-                                <p>Lista de Produtos</p>
+                                <p>Produtos</p>
                             </a>
                         </li>
                     </ul>
