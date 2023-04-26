@@ -46,24 +46,40 @@ class Empresa extends Model
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Busca empresa com id e suas relacões
+     *
+     * @param int $id
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
+     */
     public static function buscaPorId(int $id)
     {
         return self::with([
             'movimentosEstoque' => function($query) {
                 $query->latest()->take(15);
             },
-            'movimentosEstoque.produto'
+            'movimentosEstoque.produto' => function($query) {
+                $query->withTrashed();
+            }
         ])->findOrFail($id);
     }
 
     /**
      * @param string $tipo
+     * @param string $busca
      * @param int $quantidade
      * @return AbstractPaginator
      */
-    public static function todasPorTipo(string $tipo, int $quantidade = 10): AbstractPaginator
+    public static function todasPorTipo(string $tipo, string $busca, int $quantidade = 10): AbstractPaginator
     {
-        return self::where('tipo', $tipo)->paginate($quantidade);
+        return self::where('tipo', $tipo)
+                    ->where(function($query) use ($busca) {
+                        $query->orWhere('nome', 'like', "%$busca%")
+                            ->orWhere('razao_social', 'like', "%$busca%")
+                            ->orWhere('nome_contato', 'like', "%$busca%");
+
+                    })
+                    ->paginate($quantidade);
     }
 
     /**
