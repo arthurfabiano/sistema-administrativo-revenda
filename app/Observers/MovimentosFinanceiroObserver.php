@@ -28,6 +28,6 @@ class MovimentosFinanceiroObserver
             'valor' => DB::raw("valor + $valorMovimento")
         ]);
 
-        $saldo->forceDelete();
+        $saldo->delete();
     }
 }

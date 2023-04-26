@@ -14,6 +14,12 @@ class Saldo extends Model
 
     protected $guarded = ['id'];
 
+    /**
+     * Busca ultimo saldo da empresa.
+     *
+     * @param int $empresa_id
+     * @return mixed
+     */
     public static function ultimoDaEmpresa(int $empresa_id)
     {
         return self::where('empresa_id', $empresa_id)->latest()->first();

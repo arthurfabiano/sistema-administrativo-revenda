@@ -9,6 +9,10 @@
                         <h3 class="profile-username text-center">{{ $empresa->razao_social }}</h3>
 
                         <p class="text-muted text-center">{{ $empresa->tipo }}</p>
+                        <h2 class="text-{{ $empresa->tipo === 'fornecedor' ? 'danger' : 'success' }} text-center">
+                            <i class="right fas fa-arrow-circle-{{ $empresa->tipo === 'fornecedor' ? 'down' : 'up' }}"></i>
+                            R$ {{ numero_iso_para_br($saldo->valor) }}
+                        </h2>
 
                         <ul class="list-group list-group-unbordered mb-3 text-justify">
                             {{ $empresa->tipo }}

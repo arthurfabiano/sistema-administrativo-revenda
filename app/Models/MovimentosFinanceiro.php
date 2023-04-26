@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MovimentosFinanceiro extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     /**
      * The database table used by the model.
@@ -29,7 +29,7 @@ class MovimentosFinanceiro extends Model
      *
      * @var array
      */
-    protected $fillable = ['descricao', 'valor', 'data', 'tipo', 'empresa_id'];
+    protected $fillable = ['descricao', 'valor', 'tipo', 'empresa_id'];
 
     /**
      * Metodo responsável com a relação com empresa
@@ -50,7 +50,7 @@ class MovimentosFinanceiro extends Model
      * @return mixed
      */
     public static function buscaPorIntervalo(string $inicio, string $final, $quantidade = 20) {
-        return self::whereBetween('data', [$inicio, $final])
+        return self::whereBetween('created_at', [$inicio, $final])
             ->with('empresa')
             ->paginate($quantidade);
     }

@@ -55,17 +55,6 @@
             @enderror
         </div>
     </div>
-    <div class="col-lg-4">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-            </div>
-            <input type="text" name="data" class="data form-control @error('data') is-invalid @enderror" value="{{ old('data', @data_iso_para_br($movimentos_financeiro->data)) }}" placeholder="data*" required maxlength="255">
-            @error('data')
-            <span class="error invalid-feedback">{{ $message }}</span>
-            @enderror
-        </div>
-    </div>
 </div>
 
 <hr>
