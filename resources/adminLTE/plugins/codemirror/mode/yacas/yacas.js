@@ -129,7 +129,7 @@ CodeMirror.defineMode('yacas', function(_config, _parserConfig) {
       return 'operator';
     }
 
-    // everything else is an error
+    // everything else is an errors
     return 'error';
   }
 

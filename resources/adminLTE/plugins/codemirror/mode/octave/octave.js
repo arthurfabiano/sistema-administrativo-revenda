@@ -91,7 +91,7 @@ CodeMirror.defineMode("octave", function() {
 
     // Handle Strings
     var m = stream.match(/^"(?:[^"]|"")*("|$)/) || stream.match(/^'(?:[^']|'')*('|$)/)
-    if (m) { return m[1] ? 'string' : "string error"; }
+    if (m) { return m[1] ? 'string' : "string errors"; }
 
     // Handle words
     if (stream.match(keywords)) { return 'keyword'; } ;

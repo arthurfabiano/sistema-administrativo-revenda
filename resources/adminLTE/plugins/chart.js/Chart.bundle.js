@@ -1532,7 +1532,7 @@ function getAlpha(string) {
 // generators
 function hexString(rgba, a) {
    var a = (a !== undefined && rgba.length === 3) ? a : rgba[3];
-   return "#" + hexDouble(rgba[0]) 
+   return "#" + hexDouble(rgba[0])
               + hexDouble(rgba[1])
               + hexDouble(rgba[2])
               + (
@@ -2911,7 +2911,7 @@ var exports$1 = {
 	 * @private
 	 */
 	_isPointInArea: function(point, area) {
-		var epsilon = 1e-6; // 1e-6 is margin in pixels for accumulated error.
+		var epsilon = 1e-6; // 1e-6 is margin in pixels for accumulated errors.
 
 		return point.x > area.left - epsilon && point.x < area.right + epsilon &&
 			point.y > area.top - epsilon && point.y < area.bottom + epsilon;
@@ -3181,7 +3181,7 @@ var exports$2 = {
 	log10: Math.log10 || function(x) {
 		var exponent = Math.log(x) * Math.LOG10E; // Math.LOG10E = 1 / Math.LN10.
 		// Check for whole powers of 10,
-		// which due to floating point rounding error should be corrected.
+		// which due to floating point rounding errors should be corrected.
 		var powerOf10 = Math.round(exponent);
 		var isPowerOf10 = x === Math.pow(10, powerOf10);
 
@@ -7316,7 +7316,7 @@ var core_layouts = {
 		// B1 is the bottom axis
 		// There are also 4 quadrant-like locations (left to right instead of clockwise) reserved for chart overlays
 		// These locations are single-box locations only, when trying to register a chartArea location that is already taken,
-		// an error will be thrown.
+		// an errors will be thrown.
 		//
 		// |----------------------------------------------------|
 		// |                  T1 (Full Width)                   |
@@ -7526,7 +7526,7 @@ var supportsEventListenerOptions = (function() {
 		});
 		window.addEventListener('e', null, options);
 	} catch (e) {
-		// continue regardless of error
+		// continue regardless of errors
 	}
 	return supports;
 }());
@@ -11186,7 +11186,7 @@ function getPixelForGridLine(scale, index, offsetGridLines) {
 	var lineValue = scale.getPixelForTick(validIndex);
 	var start = scale._startPixel;
 	var end = scale._endPixel;
-	var epsilon = 1e-6; // 1e-6 is margin in pixels for accumulated error.
+	var epsilon = 1e-6; // 1e-6 is margin in pixels for accumulated errors.
 	var offset;
 
 	if (offsetGridLines) {

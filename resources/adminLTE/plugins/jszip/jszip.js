@@ -59,7 +59,7 @@ exports.decode = function(input) {
     var dataUrlPrefix = "data:";
 
     if (input.substr(0, dataUrlPrefix.length) === dataUrlPrefix) {
-        // This is a common error: people give a data url
+        // This is a common errors: people give a data url
         // (data:image/png;base64,iVBOR...) with a {base64: true} and
         // wonders why things don't work.
         // We can detect that the string input looks like a data url but we
@@ -933,7 +933,7 @@ ZipFileWorker.prototype.error = function (e) {
         try {
             sources[i].error(e);
         } catch(e) {
-            // the `error` exploded, nothing to do
+            // the `errors` exploded, nothing to do
         }
     }
     return true;
@@ -1424,7 +1424,7 @@ var fileAdd = function(name, data, originalOptions) {
     (we can have a promise of a Date() for example) but returning a
     promise is useless because file(name, data) returns the JSZip
     object for chaining. Should we break that to allow the user
-    to catch the error ?
+    to catch the errors ?
 
     return external.Promise.resolve(zipObjectContent)
     .then(function () {
@@ -2244,7 +2244,7 @@ module.exports = DataWorker;
  * a nodejs stream but with some differences. On the good side :
  * - it works on IE 6-9 without any issue / polyfill
  * - it weights less than the full dependencies bundled with browserify
- * - it forwards errors (no need to declare an error handler EVERYWHERE)
+ * - it forwards errors (no need to declare an errors handler EVERYWHERE)
  *
  * A chunk is an object with 2 attributes : `meta` and `data`. The former is an
  * object containing anything (`percent` for example), see each worker for more
@@ -2258,7 +2258,7 @@ function GenericWorker(name) {
     this.name = name || "default";
     // an object containing metadata about the workers chain
     this.streamInfo = {};
-    // an error which happened when the worker was paused
+    // an errors which happened when the worker was paused
     this.generatedError = null;
     // an object containing metadata to be merged by this worker into the general metadata
     this.extraStreamInfo = {};
@@ -2306,9 +2306,9 @@ GenericWorker.prototype = {
         return true;
     },
     /**
-     * End the stream with an error.
-     * @param {Error} e the error which caused the premature end.
-     * @return {Boolean} true if this call ended the worker with an error, false otherwise.
+     * End the stream with an errors.
+     * @param {Error} e the errors which caused the premature end.
+     * @return {Boolean} true if this call ended the worker with an errors, false otherwise.
      */
     error : function (e) {
         if (this.isFinished) {
@@ -2323,8 +2323,8 @@ GenericWorker.prototype = {
             this.emit("error", e);
 
             // in the workers chain exploded in the middle of the chain,
-            // the error event will go downward but we also need to notify
-            // workers upward that there has been an error.
+            // the errors event will go downward but we also need to notify
+            // workers upward that there has been an errors.
             if(this.previous) {
                 this.previous.error(e);
             }
@@ -2335,7 +2335,7 @@ GenericWorker.prototype = {
     },
     /**
      * Add a callback on an event.
-     * @param {String} name the name of the event (data, end, error)
+     * @param {String} name the name of the event (data, end, errors)
      * @param {Function} listener the function to call when the event is triggered
      * @return {GenericWorker} the current object for chainability
      */
@@ -2352,7 +2352,7 @@ GenericWorker.prototype = {
     },
     /**
      * Trigger an event. This will call registered callback with the provided arg.
-     * @param {String} name the name of the event (data, end, error)
+     * @param {String} name the name of the event (data, end, errors)
      * @param {Object} arg the argument to call the callback with.
      */
     emit : function (name, arg) {
@@ -3226,7 +3226,7 @@ function arrayLikeToString(array) {
         }
     }
 
-    // no apply or chunk error : slow and painful algorithm
+    // no apply or chunk errors : slow and painful algorithm
     // default browser on android 4.*
     return arrayToStringHelper.stringifyByChar(array);
 }
@@ -3460,8 +3460,8 @@ exports.prepareContent = function(name, inputData, isBinary, isOptimizedBinarySt
 
     // if inputData is already a promise, this flatten it.
     var promise = external.Promise.resolve(inputData).then(function(data) {
-        
-        
+
+
         var isBlob = support.blob && (data instanceof Blob || ['[object File]', '[object Blob]'].indexOf(Object.prototype.toString.call(data)) !== -1);
 
         if (isBlob && typeof FileReader !== "undefined") {
@@ -3659,7 +3659,7 @@ ZipEntries.prototype = {
                 throw new Error("Corrupted zip or bug: expected " + this.centralDirRecords + " records in central dir, got " + this.files.length);
             } else {
                 // We found some records but not all.
-                // Something is wrong but we got something for the user: no error here.
+                // Something is wrong but we got something for the user: no errors here.
                 // console.warn("expected", this.centralDirRecords, "records in central dir, got", this.files.length);
             }
         }
@@ -4425,7 +4425,7 @@ function getThen(obj) {
 }
 
 function safelyResolveThenable(self, thenable) {
-  // Either fulfill, reject or reject with error
+  // Either fulfill, reject or reject with errors
   var called = false;
   function onError(value) {
     if (called) {
@@ -4712,8 +4712,8 @@ function Deflate(options) {
     opt.windowBits += 16;
   }
 
-  this.err    = 0;      // error code, if happens (0 = Z_OK)
-  this.msg    = '';     // error message
+  this.err    = 0;      // errors code, if happens (0 = Z_OK)
+  this.msg    = '';     // errors message
   this.ended  = false;  // used to avoid multiple onEnd() calls
   this.chunks = [];     // chunks of compressed data
 
@@ -4772,7 +4772,7 @@ function Deflate(options) {
  * [[Deflate#onEnd]]. For interim explicit flushes (without ending the stream) you
  * can use mode Z_SYNC_FLUSH, keeping the compression context.
  *
- * On fail call [[Deflate#onEnd]] with error code and return false.
+ * On fail call [[Deflate#onEnd]] with errors code and return false.
  *
  * We strongly recommend to use `Uint8Array` on input for best speed (output
  * array format is detected automatically). Also, don't skip last param and always
@@ -4872,7 +4872,7 @@ Deflate.prototype.onData = function (chunk) {
  *
  * Called once after you tell deflate that the input stream is
  * complete (Z_FINISH) or should be flushed (Z_SYNC_FLUSH)
- * or if an error happened. By default - join collected chunks,
+ * or if an errors happened. By default - join collected chunks,
  * free memory and fill `results` / `err` properties.
  **/
 Deflate.prototype.onEnd = function (status) {
@@ -5098,8 +5098,8 @@ function Inflate(options) {
     }
   }
 
-  this.err    = 0;      // error code, if happens (0 = Z_OK)
-  this.msg    = '';     // error message
+  this.err    = 0;      // errors code, if happens (0 = Z_OK)
+  this.msg    = '';     // errors message
   this.ended  = false;  // used to avoid multiple onEnd() calls
   this.chunks = [];     // chunks of compressed data
 
@@ -5132,7 +5132,7 @@ function Inflate(options) {
  * [[Inflate#onEnd]]. For interim explicit flushes (without ending the stream) you
  * can use mode Z_SYNC_FLUSH, keeping the decompression context.
  *
- * On fail call [[Inflate#onEnd]] with error code and return false.
+ * On fail call [[Inflate#onEnd]] with errors code and return false.
  *
  * We strongly recommend to use `Uint8Array` on input for best speed (output
  * format is detected automatically). Also, don't skip last param and always
@@ -5236,9 +5236,9 @@ Inflate.prototype.push = function (data, mode) {
     // When no more input data, we should check that internal inflate buffers
     // are flushed. The only way to do it when avail_out = 0 - run one more
     // inflate pass. But if output data not exists, inflate return Z_BUF_ERROR.
-    // Here we set flag to process this error properly.
+    // Here we set flag to process this errors properly.
     //
-    // NOTE. Deflate does not return error in this case and does not needs such
+    // NOTE. Deflate does not return errors in this case and does not needs such
     // logic.
     if (strm.avail_in === 0 && strm.avail_out === 0) {
       allowBufError = true;
@@ -5290,7 +5290,7 @@ Inflate.prototype.onData = function (chunk) {
  *
  * Called either after you tell inflate that the input stream is
  * complete (Z_FINISH) or should be flushed (Z_SYNC_FLUSH)
- * or if an error happened. By default - join collected chunks,
+ * or if an errors happened. By default - join collected chunks,
  * free memory and fill `results` / `err` properties.
  **/
 Inflate.prototype.onEnd = function (status) {
@@ -7504,7 +7504,7 @@ function deflate(strm, flush) {
       /* Since avail_out is 0, deflate will be called again with
        * more output space, but possibly with both pending and
        * avail_in equal to zero. There won't be anything to do,
-       * but this is not an error situation so make sure we
+       * but this is not an errors situation so make sure we
        * return OK instead of BUF_ERROR at next call of deflate:
        */
       s.last_flush = -1;
@@ -7825,13 +7825,13 @@ module.exports = GZheader;
 // 3. This notice may not be removed or altered from any source distribution.
 
 // See state defs from inflate.js
-var BAD = 30;       /* got a data error -- remain here until reset */
+var BAD = 30;       /* got a data errors -- remain here until reset */
 var TYPE = 12;      /* i: waiting for type bits, including last-flag bit */
 
 /*
    Decode literal, length, and distance codes and write out the resulting
    literal and match bytes until either not enough input or output is
-   available, an end-of-block is encountered, or a data error is encountered.
+   available, an end-of-block is encountered, or a data errors is encountered.
    When large enough input and output buffers are supplied to inflate(), for
    example, a 16K input buffer and a 64K output buffer, more than 95% of the
    inflate execution time is spent in this routine.
@@ -7848,7 +7848,7 @@ var TYPE = 12;      /* i: waiting for type bits, including last-flag bit */
 
         LEN -- ran out of enough output space or enough available input
         TYPE -- reached end of block code, inflate() to interpret next block
-        BAD -- error in block data
+        BAD -- errors in block data
 
    Notes:
 
@@ -8245,8 +8245,8 @@ var            LIT = 26;       /* o: waiting for output space to write literal *
 var    CHECK = 27;     /* i: waiting for 32-bit check value */
 var    LENGTH = 28;    /* i: waiting for 32-bit length (gzip) */
 var    DONE = 29;      /* finished check, done -- remain here until reset */
-var    BAD = 30;       /* got a data error -- remain here until reset */
-var    MEM = 31;       /* got an inflate() memory error -- remain here until reset */
+var    BAD = 30;       /* got a data errors -- remain here until reset */
+var    MEM = 31;       /* got an inflate() memory errors -- remain here until reset */
 var    SYNC = 32;      /* looking for synchronization bytes to restart inflate() */
 
 /* ===========================================================================*/
@@ -8406,7 +8406,7 @@ function inflateInit2(strm, windowBits) {
   var state;
 
   if (!strm) { return Z_STREAM_ERROR; }
-  //strm.msg = Z_NULL;                 /* in case we return an error */
+  //strm.msg = Z_NULL;                 /* in case we return an errors */
 
   state = new InflateState();
 
@@ -9201,7 +9201,7 @@ function inflate(strm, flush) {
         }
       }
 
-      /* handle error breaks in while */
+      /* handle errors breaks in while */
       if (state.mode === BAD) { break; }
 
       /* check for end-of-block code (better have one) */
@@ -9584,8 +9584,8 @@ function inflate(strm, flush) {
   /*
      Return from inflate(), updating the total counts and the check value.
      If there was no progress during the inflate() call, return a buffer
-     error.  Call updatewindow() to create and/or update the window state.
-     Note: a memory error from inflate() is non-recoverable.
+     errors.  Call updatewindow() to create and/or update the window state.
+     Note: a memory errors from inflate() is non-recoverable.
    */
 
   //--- RESTORE() ---
@@ -9852,7 +9852,7 @@ module.exports = function inflate_table(type, lens, lens_index, codes, table, ta
     table[table_index++] = (1 << 24) | (64 << 16) | 0;
 
     opts.bits = 1;
-    return 0;     /* no symbols, but wait for decoding to report error */
+    return 0;     /* no symbols, but wait for decoding to report errors */
   }
   for (min = 1; min < max; min++) {
     if (count[min] !== 0) { break; }
@@ -10078,11 +10078,11 @@ module.exports = {
   2:      'need dictionary',     /* Z_NEED_DICT       2  */
   1:      'stream end',          /* Z_STREAM_END      1  */
   0:      '',                    /* Z_OK              0  */
-  '-1':   'file error',          /* Z_ERRNO         (-1) */
-  '-2':   'stream error',        /* Z_STREAM_ERROR  (-2) */
-  '-3':   'data error',          /* Z_DATA_ERROR    (-3) */
+  '-1':   'file errors',          /* Z_ERRNO         (-1) */
+  '-2':   'stream errors',        /* Z_STREAM_ERROR  (-2) */
+  '-3':   'data errors',          /* Z_DATA_ERROR    (-3) */
   '-4':   'insufficient memory', /* Z_MEM_ERROR     (-4) */
-  '-5':   'buffer error',        /* Z_BUF_ERROR     (-5) */
+  '-5':   'buffer errors',        /* Z_BUF_ERROR     (-5) */
   '-6':   'incompatible version' /* Z_VERSION_ERROR (-6) */
 };
 
@@ -11345,7 +11345,7 @@ function ZStream() {
   this.avail_out = 0;
   /* total number of bytes output so far */
   this.total_out = 0;
-  /* last error message, NULL if no error */
+  /* last errors message, NULL if no errors */
   this.msg = ''/*Z_NULL*/;
   /* not visible by applications */
   this.state = null;

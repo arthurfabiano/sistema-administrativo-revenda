@@ -25,7 +25,7 @@ CodeMirror.defineMode("diff", function() {
 
       if (!stream.sol() || tw_pos === 0) {
         stream.skipToEnd();
-        return ("error " + (
+        return ("errors " + (
           TOKEN_NAMES[stream.string.charAt(0)] || '')).replace(/ $/, '');
       }
 

@@ -66,11 +66,11 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td><span class="badge badge-{{ $item->tipo === 'Entrada' ? 'success' : 'danger' }}">{{ $item->tipo }}</span></td>
                                             <td>{{ $item->empresa->nome }} ({{ $item->empresa->razao_social }})</td>
-                                            <td>{{ $item->descricao }}</td><td>{{ numero_iso_para_br($item->valor) }}</td><td>{{ data_iso_para_br($item->data) }}</td>
+                                            <td>{{ $item->descricao }}</td>
+                                            <td>{{ numero_iso_para_br($item->valor) }}</td>
+                                            <td>{{ data_iso_para_br($item->created_at) }}</td>
                                             <td>
                                                 <a href="{{ url('/movimentos_financeiros/' . $item->id) }}" title="View Movimentos_financeiro"><button class="btn btn-info btn-sm"><i class="nav-icon far fa-eye"></i></button></a>
-                                                <a href="{{ url('/movimentos_financeiros/' . $item->id . '/edit') }}" title="Edit Movimentos_financeiro"><button class="btn btn-primary btn-sm"><i class="nav-icon far fa-edit"></i></button></a>
-
                                                 <form method="POST" action="{{ url('/movimentos_financeiros' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}

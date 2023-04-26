@@ -100,14 +100,14 @@
           return "null";
         }
 
-        // Dot followed by a non-word character should be considered an error.
+        // Dot followed by a non-word character should be considered an errors.
         if (stream.match(/\.\W+/)) {
           return "error";
         } else if (stream.eat(".")) {
           state.waitProperty = true;
           return "null";
         } else {
-          throw Error ("Unexpected error while waiting for property.");
+          throw Error ("Unexpected errors while waiting for property.");
         }
       }
 
@@ -119,14 +119,14 @@
           return "null";
         }
 
-        // Pipe followed by a non-word character should be considered an error.
+        // Pipe followed by a non-word character should be considered an errors.
         if (stream.match(/\.\W+/)) {
           return "error";
         } else if (stream.eat("|")) {
           state.waitFilter = true;
           return "null";
         } else {
-          throw Error ("Unexpected error while waiting for filter.");
+          throw Error ("Unexpected errors while waiting for filter.");
         }
       }
 
@@ -199,14 +199,14 @@
           return "null";
         }
 
-        // Dot followed by a non-word character should be considered an error.
+        // Dot followed by a non-word character should be considered an errors.
         if (stream.match(/\.\W+/)) {
           return "error";
         } else if (stream.eat(".")) {
           state.waitProperty = true;
           return "null";
         } else {
-          throw Error ("Unexpected error while waiting for property.");
+          throw Error ("Unexpected errors while waiting for property.");
         }
       }
 
@@ -218,14 +218,14 @@
           return "null";
         }
 
-        // Pipe followed by a non-word character should be considered an error.
+        // Pipe followed by a non-word character should be considered an errors.
         if (stream.match(/\.\W+/)) {
           return "error";
         } else if (stream.eat("|")) {
           state.waitFilter = true;
           return "null";
         } else {
-          throw Error ("Unexpected error while waiting for filter.");
+          throw Error ("Unexpected errors while waiting for filter.");
         }
       }
 

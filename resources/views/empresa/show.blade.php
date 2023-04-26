@@ -15,9 +15,9 @@
                     <!-- Default box -->
                     <div class="card">
                         @if ($empresa->tipo === 'fornecedor')
-                            <div class="card-header">Últimos itens comprados deste fornecedor:</div>
+                            <div class="card-header">Dados do fornecedor:</div>
                         @else
-                            <div class="card-header">Últimos itens vendidos para este cliente:</div>
+                            <div class="card-header">Dados do cliente:</div>
                         @endif
 
                         <div class="card-body">
@@ -42,9 +42,11 @@
                 <div class="col-12">
                     <!-- Default box -->
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Movimento de Estoque</h3>
-                        </div>
+                        @if ($empresa->tipo === 'fornecedor')
+                            <div class="card-header">Últimos itens comprados deste fornecedor:</div>
+                        @else
+                            <div class="card-header">Últimos itens vendidos para este cliente:</div>
+                        @endif
 
                         <div class="card-body">
                             @include('empresa.parciais.movimentos_estoque')

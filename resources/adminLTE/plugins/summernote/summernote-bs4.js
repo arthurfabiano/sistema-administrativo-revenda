@@ -1,5 +1,5 @@
 /*!
- * 
+ *
  * Super simple WYSIWYG editor v0.8.20
  * https://summernote.org
  *
@@ -208,7 +208,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1145__;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -222,14 +222,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1145__;
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -242,7 +242,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1145__;
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -254,12 +254,12 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1145__;
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -270,7 +270,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1145__;
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
@@ -3518,9 +3518,9 @@ function createImage(url) {
   return external_jQuery_default().Deferred(function (deferred) {
     var $img = external_jQuery_default()('<img>');
     $img.one('load', function () {
-      $img.off('error abort');
+      $img.off('errors abort');
       deferred.resolve($img);
-    }).one('error abort', function () {
+    }).one('errors abort', function () {
       $img.off('load').detach();
       deferred.reject($img);
     }).css({
@@ -5847,7 +5847,7 @@ var Editor = /*#__PURE__*/function () {
 
         _this3.afterCommand();
       }).fail(function (e) {
-        _this3.context.triggerEvent('image.upload.error', e);
+        _this3.context.triggerEvent('image.upload.errors', e);
       });
     }
     /**
@@ -5864,12 +5864,12 @@ var Editor = /*#__PURE__*/function () {
         var filename = file.name;
 
         if (_this4.options.maximumImageFileSize && _this4.options.maximumImageFileSize < file.size) {
-          _this4.context.triggerEvent('image.upload.error', _this4.lang.image.maximumFileSizeError);
+          _this4.context.triggerEvent('image.upload.errors', _this4.lang.image.maximumFileSizeError);
         } else {
           readFileAsDataURL(file).then(function (dataURL) {
             return _this4.insertImage(dataURL, filename);
           }).fail(function () {
-            _this4.context.triggerEvent('image.upload.error');
+            _this4.context.triggerEvent('image.upload.errors');
           });
         }
       });
@@ -9707,7 +9707,7 @@ var HintPopover = /*#__PURE__*/function () {
       'fullscreen': Fullscreen,
       'handle': Handle,
       // FIXME: HintPopover must be front of autolink
-      //  - Script error about range when Enter key is pressed on hint popover
+      //  - Script errors about range when Enter key is pressed on hint popover
       'hintPopover': HintPopover,
       'autoLink': AutoLink,
       'autoSync': AutoSync,

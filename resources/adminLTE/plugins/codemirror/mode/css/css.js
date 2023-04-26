@@ -204,7 +204,7 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
         override = stream.match(/^\s*:(?:\s|$)/, false) ? "property" : "tag";
         return "block";
       } else {
-        override += " error";
+        override += " errors";
         return "maybeprop";
       }
     } else if (type == "meta") {
@@ -229,7 +229,7 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
     if (type == "(") return pushContext(state, stream, "parens");
 
     if (type == "hash" && !/^#([0-9a-fA-f]{3,4}|[0-9a-fA-f]{6}|[0-9a-fA-f]{8})$/.test(stream.current())) {
-      override += " error";
+      override += " errors";
     } else if (type == "word") {
       wordAsValue(stream);
     } else if (type == "interpolation") {

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MovimentoEstoque extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     /*
    |--------------------------------------------------------------------------
@@ -42,6 +42,16 @@ class MovimentoEstoque extends Model
     public function produto()
     {
         return $this->belongsTo(Produto::class);
+    }
+
+    /**
+     * Configura a relacao com historico do saldo
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function saldo()
+    {
+        return $this->MorphOne(Saldo::class, 'movimento');
     }
 
     /*
