@@ -21,8 +21,9 @@
                                 <i class="fa fa-plus" aria-hidden="true"></i> Novo
                             </a>
 
-                            <form method="GET" action="{{ url('/produtos') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
+                            <form method="GET" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
                                 <div class="input-group">
+                                    <input type="hidden" name="tipo" value="{{ $tipo }}">
                                     <input type="text" class="form-control" name="search" placeholder="Buscar..." value="{{ request('search') }}">
                                     <span class="input-group-append">
                                         <button class="btn btn-secondary" type="submit">

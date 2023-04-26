@@ -32,6 +32,19 @@ class MovimentosFinanceiro extends Model
     protected $fillable = ['descricao', 'valor', 'tipo', 'empresa_id'];
 
     /**
+     * busca movimento por id e tras empresas que foram excluidas
+     *
+     * @param int $id
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
+     */
+    public static function porIdComEmpresaExcluida(int $id)
+    {
+        return self::with(['empresa' => function($query) {
+            $query->withTrashed();
+        }])->findOrFail($id);
+    }
+
+    /**
      * Metodo responsável com a relação com empresa
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -51,8 +64,9 @@ class MovimentosFinanceiro extends Model
      */
     public static function buscaPorIntervalo(string $inicio, string $final, $quantidade = 20) {
         return self::whereBetween('created_at', [$inicio, $final])
-            ->with('empresa')
-            ->paginate($quantidade);
+        ->with(['empresa' => function($query) {
+            $query->withTrashed();
+        }])->paginate($quantidade);
     }
 
     /**

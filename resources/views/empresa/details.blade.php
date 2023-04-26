@@ -11,7 +11,7 @@
                         <p class="text-muted text-center">{{ $empresa->tipo }}</p>
                         <h2 class="text-{{ $empresa->tipo === 'fornecedor' ? 'danger' : 'success' }} text-center">
                             <i class="right fas fa-arrow-circle-{{ $empresa->tipo === 'fornecedor' ? 'down' : 'up' }}"></i>
-                            R$ {{ numero_iso_para_br($saldo->valor) }}
+                            R$ {{ numero_iso_para_br($saldo->valor ?? 0) }}
                         </h2>
 
                         <ul class="list-group list-group-unbordered mb-3 text-justify">
@@ -21,10 +21,15 @@
                             @csrf
                             @method('delete')
 
+                            <a href="{{ route('empresas.relatorios.saldo', $empresa) }}" class="btn btn-primary btn-block">
+                                <b>Relatório de Saldo</b>
+                            </a>
+
                             <button type="submit" class="btn btn-danger btn-block"
                                 onclick="return confirm('Tem certeza que deseja apagar o registro?')">
                                 <b>Apagar</b>
                             </button>
+
                         </form>
                     </div>
 

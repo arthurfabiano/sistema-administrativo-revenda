@@ -30,6 +30,8 @@ class MovimentoEstoque extends Model
     // protected $dates = [];
     // protected $casts = [];
 
+    // Indica que o movimento de estoque sempre deve carregar a relacao com o produto
+    protected $with = ['produto'];
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +43,7 @@ class MovimentoEstoque extends Model
      */
     public function produto()
     {
-        return $this->belongsTo(Produto::class);
+        return $this->belongsTo(Produto::class)->withTrashed();
     }
 
     /**
