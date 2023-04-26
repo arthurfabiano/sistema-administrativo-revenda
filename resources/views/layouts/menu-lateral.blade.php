@@ -86,13 +86,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="../../index.html" class="nav-link">
+                            <a href="{{ route('movimentos_financeiros.create') }}" class="nav-link">
                                 <i class="fas fa-dollar-sign nav-icon"></i>
                                 <p>Novo Lançamento</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../../index2.html" class="nav-link">
+                            <a href="{{ route('movimentos_financeiros.index') }}" class="nav-link">
                                 <i class="fas fa-chart-pie nav-icon"></i>
                                 <p>Relatório Financeiro</p>
                             </a>
@@ -110,9 +110,17 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('produtos.create') }}" class="nav-link">
+                            <a href="{{ route('produtos.index') }}" class="nav-link">
                                 <i class="fas fa-boxes nav-icon"></i>
-                                <p>Lista de Produtos</p>
+                                <p>Produtos</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('users.index') }}" class="nav-link">
+                                <i class="fas fa-users nav-icon"></i>
+                                <p>Usuários</p>
                             </a>
                         </li>
                     </ul>

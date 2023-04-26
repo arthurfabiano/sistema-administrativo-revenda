@@ -16,6 +16,7 @@ class CreateProdutosTable extends Migration
             $table->increments('id');
             $table->string('nome')->nullable();
             $table->text('descricao')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });

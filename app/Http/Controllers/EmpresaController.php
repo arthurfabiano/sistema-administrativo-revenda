@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmpresaRequest;
 use App\Models\Empresa;
+use App\Models\Saldo;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -48,22 +49,27 @@ class EmpresaController extends Controller
 
     /**
      * @param EmpresaRequest $request
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(EmpresaRequest $request): Response
     {
         $empresa = Empresa::create($request->all());
 
-        return \redirect()->route('empresas.show', $empresa->id);
+        return redirect()->route('empresas.show', $empresa->id);
     }
 
     /**
      * @param Empresa $empresa
      * @return View
      */
-    public function show(Empresa $empresa): View
+    public function show(int $id): View
     {
-        return view('empresa.show', compact('empresa'));
+        $empresa = Empresa::buscaPorId($id);
+
+        return view('empresa.show', [
+            'empresa' => Empresa::buscaPorId($id),
+            'saldo' => Saldo::ultimoDaEmpresa($id)
+        ]);
     }
 
     /**

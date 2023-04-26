@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title',  '%%crudNameCap%%')
+
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ url('/%%routeGroup%%%%viewName%%') }}">Listagem</a></li>
+@endsection
+
 @section('content')
     <section class="content">
         <div class="container-fluid">
@@ -60,5 +66,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @endsection

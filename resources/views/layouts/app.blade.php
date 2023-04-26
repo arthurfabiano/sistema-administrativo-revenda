@@ -17,7 +17,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
     <!-- Scripts -->
-    @vite(['resources/adminLTE/plugins/fontawesome-free/css/all.min.css', 'resources/adminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css', 'resources/adminLTE/dist/css/adminlte.min.css'])
+    @vite([
+        'resources/adminLTE/plugins/fontawesome-free/css/all.min.css',
+        'resources/adminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css',
+        'resources/adminLTE/dist/css/adminlte.min.css',
+        'resources/adminLTE/plugins/select2/css/select2.css',
+        'resources/css/custom.css'])
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div id="app" class="wrapper">
@@ -76,6 +81,8 @@
         'resources/adminLTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js',
         'resources/adminLTE/dist/js/adminlte.min.js">',
         'resources/adminLTE/plugins/jquery-mask/dist/jquery.mask.js',
-        'resources/adminLTE/plugins/jquery-mask/dist/custom.mask.js'])
+        'resources/adminLTE/plugins/jquery-mask/dist/custom.mask.js',
+        'resources/adminLTE/plugins/select2/js/select2.js',
+        'resources/adminLTE/plugins/select2/js/selects-custom.js'])
 </body>
 </html>

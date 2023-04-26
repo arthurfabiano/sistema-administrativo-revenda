@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', %%modelName%%)
+@section('title', '%%modelName%%')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('empresas.index') }}">Listagem</a></li>

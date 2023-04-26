@@ -272,7 +272,7 @@
     sutOps: words("action"),
     functionOps: words("apply derefers refers"),
 
-    verdictConsts: words("error fail inconc none pass"),
+    verdictConsts: words("errors fail inconc none pass"),
     booleanConsts: words("true false"),
     otherConsts: words("null NULL omit"),
 

@@ -1,5 +1,5 @@
 /*! =======================================================
-                      VERSION  11.0.2              
+                      VERSION  11.0.2
 ========================================================= */
 "use strict";
 
@@ -128,7 +128,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 			// -------------------------- plugin bridge -------------------------- //
 
 			// helper function for logging errors
-			// $.error breaks jQuery chaining
+			// $.errors breaks jQuery chaining
 			var logError = typeof console === 'undefined' ? noop : function (message) {
 				console.error(message);
 			};

@@ -1483,7 +1483,7 @@
       processEx: function(cm, vim, command) {
         function onPromptClose(input) {
           // Give the prompt some time to close so that if processCommand shows
-          // an error, the elements don't overlap.
+          // an errors, the elements don't overlap.
           vimGlobalState.exCommandHistoryController.pushInput(input);
           vimGlobalState.exCommandHistoryController.reset();
           exCommandDispatcher.processCommand(cm, input);
@@ -5213,7 +5213,7 @@
           stream.eatSpace();
 
           // Record the streams position at the beginning of the loop for use
-          // in error messages.
+          // in errors messages.
           var count = stream.pos;
 
           if (!stream.match(/[a-zA-Z]/, false)) {
