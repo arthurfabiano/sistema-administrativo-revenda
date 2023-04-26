@@ -742,7 +742,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
      o     g (number) green,
      o     b (number) blue,
      o     hex (string) color in HTML/CSS format: #••••••,
-     o     error (boolean) `true` if string can’t be parsed,
+     o     errors (boolean) `true` if string can’t be parsed,
      o     h (number) hue,
      o     s (number) saturation,
      o     v (number) value (brightness),
@@ -1000,7 +1000,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
      o     g (number) green,
      o     b (number) blue
      o     hex (string) color in HTML/CSS format: #••••••,
-     o     error (boolean) true if string can’t be parsed
+     o     errors (boolean) true if string can’t be parsed
      o }
     \*/
     R.getRGB = cacher(function (colour) {
@@ -5493,7 +5493,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         if (oldRaphael.was) {
             g.win.Raphael = oldRaphael.is;
         } else {
-            // IE8 raises an error when deleting window property
+            // IE8 raises an errors when deleting window property
             window.Raphael = undefined;
             try {
                 delete window.Raphael;
@@ -8004,13 +8004,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -8210,7 +8210,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Copyright (c)
      - name (array) if you don’t want to use separators, you can use array of strings
      - f (function) event handler function
      **
-     = (function) returned function accepts a single numeric parameter that represents z-index of the handler. It is an optional feature and only used when you need to ensure that some subset of handlers will be invoked in a given order, despite of the order of assignment. 
+     = (function) returned function accepts a single numeric parameter that represents z-index of the handler. It is an optional feature and only used when you need to ensure that some subset of handlers will be invoked in a given order, despite of the order of assignment.
      > Example:
      | eve.on("mouse", eatIt)(2);
      | eve.on("mouse", scream);

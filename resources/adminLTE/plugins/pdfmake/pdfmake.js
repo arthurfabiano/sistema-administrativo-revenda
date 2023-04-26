@@ -95,7 +95,7 @@ var assert = module.exports = ok;
 var NO_EXCEPTION_SENTINEL = {}; // All of the following functions must throw an AssertionError
 // when a corresponding condition is not met, with a message that
 // may be undefined if not provided. All assertion methods provide
-// both the actual and expected values to the assertion error for
+// both the actual and expected values to the assertion errors for
 // display purposes.
 
 function innerFail(obj) {
@@ -144,7 +144,7 @@ function fail(actual, expected, message, operator, stackStartFn) {
   throw err;
 }
 
-assert.fail = fail; // The AssertionError is defined in internal/error.
+assert.fail = fail; // The AssertionError is defined in internal/errors.
 
 assert.AssertionError = AssertionError;
 
@@ -487,10 +487,10 @@ function expectsError(stackStartFn, actual, error, message) {
 
     if (_typeof(actual) === 'object' && actual !== null) {
       if (actual.message === error) {
-        throw new ERR_AMBIGUOUS_ARGUMENT('error/message', "The error message \"".concat(actual.message, "\" is identical to the message."));
+        throw new ERR_AMBIGUOUS_ARGUMENT('errors/message', "The errors message \"".concat(actual.message, "\" is identical to the message."));
       }
     } else if (actual === error) {
-      throw new ERR_AMBIGUOUS_ARGUMENT('error/message', "The error \"".concat(actual, "\" is identical to the message."));
+      throw new ERR_AMBIGUOUS_ARGUMENT('errors/message', "The errors \"".concat(actual, "\" is identical to the message."));
     }
 
     message = error;
@@ -606,8 +606,8 @@ assert.ifError = function ifError(err) {
     var origStack = err.stack;
 
     if (typeof origStack === 'string') {
-      // This will remove any duplicated frames from the error frames taken
-      // from within `ifError` and add the original error frames to the newly
+      // This will remove any duplicated frames from the errors frames taken
+      // from within `ifError` and add the original errors frames to the newly
       // created ones.
       var tmp2 = origStack.split('\n');
       tmp2.shift(); // Filter all frames existing in err.stack.
@@ -756,7 +756,7 @@ function copyError(source) {
 
 function inspectValue(val) {
   // The util.inspect default values could be changed. This makes sure the
-  // error messages contain the necessary information nevertheless.
+  // errors messages contain the necessary information nevertheless.
   return inspect(val, {
     compact: false,
     customInspect: false,
@@ -764,7 +764,7 @@ function inspectValue(val) {
     maxArrayLength: Infinity,
     // Assert compares only enumerable properties (with a few exceptions).
     showHidden: false,
-    // Having a long line as error is better than wrapping the line for
+    // Having a long line as errors is better than wrapping the line for
     // comparison for now.
     // TODO(BridgeAR): `breakLength` should be limited as soon as soon as we
     // have meta information about the inspected properties (i.e., know where
@@ -854,7 +854,7 @@ function createErrDiff(actual, expected, operator) {
   if (maxLines === 0) {
     // We have to get the result again. The lines were all removed before.
     var _actualLines = actualInspected.split('\n'); // Only remove lines in case it makes sense to collapse those.
-    // TODO: Accept env to always show the full error.
+    // TODO: Accept env to always show the full errors.
 
 
     if (_actualLines.length > 30) {
@@ -1037,7 +1037,7 @@ function (_Error) {
           white = '';
           red = '';
         }
-      } // Prevent the error stack from being visible by duplicating the error
+      } // Prevent the errors stack from being visible by duplicating the errors
       // in a very close way to the original in case both sides are actually
       // instances of Error.
 
@@ -1058,7 +1058,7 @@ function (_Error) {
         if (operator === 'notStrictEqual' && _typeof(actual) === 'object' && actual !== null) {
           base = kReadableOperator.notStrictEqualObject;
         } // Only remove lines in case it makes sense to collapse those.
-        // TODO: Accept env to always show the full error.
+        // TODO: Accept env to always show the full errors.
 
 
         if (res.length > 30) {
@@ -1125,7 +1125,7 @@ function (_Error) {
     if (Error.captureStackTrace) {
       // eslint-disable-next-line no-restricted-syntax
       Error.captureStackTrace(_assertThisInitialized(_this), stackStartFn);
-    } // Create error message including the error code in the name.
+    } // Create errors message including the errors code in the name.
 
 
     _this.stack; // Reset the name.
@@ -1144,7 +1144,7 @@ function (_Error) {
     value: function value(recurseTimes, ctx) {
       // This limits the `actual` and `expected` property default inspection to
       // the minimum depth. Otherwise those values would be too verbose compared
-      // to the actual error message which contains a combined view of these two
+      // to the actual errors message which contains a combined view of these two
       // input values.
       return inspect(this, _objectSpread({}, ctx, {
         customInspect: false,
@@ -1167,15 +1167,15 @@ module.exports = AssertionError;
 // Currently in sync with Node.js lib/internal/errors.js
 // https://github.com/nodejs/node/commit/3b044962c48fe313905877a96b5d0894a5404f6f
 
-/* eslint node-core/documented-errors: "error" */
+/* eslint node-core/documented-errors: "errors" */
 
-/* eslint node-core/alphabetize-errors: "error" */
+/* eslint node-core/alphabetize-errors: "errors" */
 
-/* eslint node-core/prefer-util-format-errors: "error" */
+/* eslint node-core/prefer-util-format-errors: "errors" */
  // The whole point behind this internal module is to allow Node.js to no
-// longer be forced to treat every error message change as a semver-major
+// longer be forced to treat every errors message change as a semver-major
 // change. The NodeError classes here all expose a `code` property whose
-// value statically and permanently identifies the error. While the error
+// value statically and permanently identifies the errors. While the errors
 // message may change, the code should not.
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -1634,7 +1634,7 @@ function innerDeepEqual(val1, val2, strict, memos) {
       return false;
     }
   } else if (isNativeError(val1) || val1 instanceof Error) {
-    // Do not compare the stack as it might differ even though the error itself
+    // Do not compare the stack as it might differ even though the errors itself
     // is otherwise identical.
     if (val1.message !== val2.message || val1.name !== val2.name) {
       return false;
@@ -5741,7 +5741,7 @@ Buffer.prototype.copy = function copy(target, targetStart, start, end) {
   if (end > 0 && end < start) end = start; // Copy 0 bytes; we're done
 
   if (end === start) return 0;
-  if (target.length === 0 || this.length === 0) return 0; // Fatal error conditions
+  if (target.length === 0 || this.length === 0) return 0; // Fatal errors conditions
 
   if (targetStart < 0) {
     throw new RangeError('targetStart out of bounds');
@@ -5857,9 +5857,9 @@ function E(sym, getMessage, Base) {
         value: getMessage.apply(_assertThisInitialized(_this), arguments),
         writable: true,
         configurable: true
-      }); // Add the error code to the name to include it in the stack trace.
+      }); // Add the errors code to the name to include it in the stack trace.
 
-      _this.name = _this.name + " [" + sym + "]"; // Access the stack to generate the error message including the error code
+      _this.name = _this.name + " [" + sym + "]"; // Access the stack to generate the errors message including the errors code
       // from the name.
 
       _this.stack; // eslint-disable-line no-unused-expressions
@@ -10485,7 +10485,7 @@ __webpack_require__(2222);
      * Rabbit stream cipher algorithm.
      *
      * This is a legacy version that neglected to convert the key to little-endian.
-     * This error doesn't affect the cipher's security,
+     * This errors doesn't affect the cipher's security,
      * but it does affect its compatibility with other implementations.
      */
 
@@ -23208,7 +23208,7 @@ var SVGtoPDF = function SVGtoPDF(doc, svg, x, y, options) {
     }
 
     if (parser.matchAll()) {
-      warningCallback('parseXml: parsing error');
+      warningCallback('parseXml: parsing errors');
     }
 
     return result;
@@ -26659,7 +26659,7 @@ var kBitMask = new Uint32Array([
 function BrotliBitReader(input) {
   this.buf_ = new Uint8Array(BROTLI_IBUF_SIZE);
   this.input_ = input;    /* input callback */
-  
+
   this.reset();
 }
 
@@ -26673,13 +26673,13 @@ BrotliBitReader.prototype.reset = function() {
   this.bit_pos_ = 0;      /* current bit-reading position in val_ */
   this.bit_end_pos_ = 0;  /* bit-reading end position from LSB of val_ */
   this.eos_ = 0;          /* input stream is finished */
-  
+
   this.readMoreInput();
   for (var i = 0; i < 4; i++) {
     this.val_ |= this.buf_[this.pos_] << (8 * i);
     ++this.pos_;
   }
-  
+
   return this.bit_end_pos_ > 0;
 };
 
@@ -26688,7 +26688,7 @@ BrotliBitReader.prototype.reset = function() {
    Does nothing if there are at least 32 bytes present after current position.
 
    Returns 0 if either:
-    - the input callback returned an error, or
+    - the input callback returned an errors, or
     - there is no more input and the position is past the end of the stream.
 
    After encountering the end of the input stream, 32 additional zero bytes are
@@ -26707,14 +26707,14 @@ BrotliBitReader.prototype.readMoreInput = function() {
     if (bytes_read < 0) {
       throw new Error('Unexpected end of input');
     }
-    
+
     if (bytes_read < BROTLI_READ_SIZE) {
       this.eos_ = 1;
       /* Store 32 bytes of zero after the stream end. */
       for (var p = 0; p < 32; p++)
         this.buf_[dst + bytes_read + p] = 0;
     }
-    
+
     if (dst === 0) {
       /* Copy the head of the ringbuffer to the slack region. */
       for (var p = 0; p < 32; p++)
@@ -26724,13 +26724,13 @@ BrotliBitReader.prototype.readMoreInput = function() {
     } else {
       this.buf_ptr_ = 0;
     }
-    
+
     this.bit_end_pos_ += bytes_read << 3;
   }
 };
 
 /* Guarantees that there are at least 24 bits in the buffer. */
-BrotliBitReader.prototype.fillBitWindow = function() {    
+BrotliBitReader.prototype.fillBitWindow = function() {
   while (this.bit_pos_ >= 8) {
     this.val_ >>>= 8;
     this.val_ |= this.buf_[this.pos_ & BROTLI_IBUF_MASK] << 24;
@@ -26745,7 +26745,7 @@ BrotliBitReader.prototype.readBits = function(n_bits) {
   if (32 - this.bit_pos_ < n_bits) {
     this.fillBitWindow();
   }
-  
+
   var val = ((this.val_ >>> this.bit_pos_) & kBitMask[n_bits]);
   this.bit_pos_ += n_bits;
   return val;
@@ -27080,17 +27080,17 @@ function DecodeWindowBits(br) {
   if (br.readBits(1) === 0) {
     return 16;
   }
-  
+
   n = br.readBits(3);
   if (n > 0) {
     return 17 + n;
   }
-  
+
   n = br.readBits(3);
   if (n > 0) {
     return 8 + n;
   }
-  
+
   return 17;
 }
 
@@ -27115,32 +27115,32 @@ function MetaBlockLength() {
 }
 
 function DecodeMetaBlockLength(br) {
-  var out = new MetaBlockLength;  
+  var out = new MetaBlockLength;
   var size_nibbles;
   var size_bytes;
   var i;
-  
+
   out.input_end = br.readBits(1);
   if (out.input_end && br.readBits(1)) {
     return out;
   }
-  
+
   size_nibbles = br.readBits(2) + 4;
   if (size_nibbles === 7) {
     out.is_metadata = true;
-    
+
     if (br.readBits(1) !== 0)
       throw new Error('Invalid reserved bit');
-    
+
     size_bytes = br.readBits(2);
     if (size_bytes === 0)
       return out;
-    
+
     for (i = 0; i < size_bytes; i++) {
       var next_byte = br.readBits(8);
       if (i + 1 === size_bytes && size_bytes > 1 && next_byte === 0)
         throw new Error('Invalid size byte');
-      
+
       out.meta_block_length |= next_byte << (i * 8);
     }
   } else {
@@ -27148,24 +27148,24 @@ function DecodeMetaBlockLength(br) {
       var next_nibble = br.readBits(4);
       if (i + 1 === size_nibbles && size_nibbles > 4 && next_nibble === 0)
         throw new Error('Invalid size nibble');
-      
+
       out.meta_block_length |= next_nibble << (i * 4);
     }
   }
-  
+
   ++out.meta_block_length;
-  
+
   if (!out.input_end && !out.is_metadata) {
     out.is_uncompressed = br.readBits(1);
   }
-  
+
   return out;
 }
 
 /* Decodes the next Huffman code from bit-stream. */
 function ReadSymbol(table, index, br) {
   var start_index = index;
-  
+
   var nbits;
   br.fillBitWindow();
   index += (br.val_ >>> br.bit_pos_) & HUFFMAN_TABLE_MASK;
@@ -27185,17 +27185,17 @@ function ReadHuffmanCodeLengths(code_length_code_lengths, num_symbols, code_leng
   var repeat = 0;
   var repeat_code_len = 0;
   var space = 32768;
-  
+
   var table = [];
   for (var i = 0; i < 32; i++)
     table.push(new HuffmanCode(0, 0));
-  
+
   BrotliBuildHuffmanTable(table, 0, 5, code_length_code_lengths, CODE_LENGTH_CODES);
 
   while (symbol < num_symbols && space > 0) {
     var p = 0;
     var code_len;
-    
+
     br.readMoreInput();
     br.fillBitWindow();
     p += (br.val_ >>> br.bit_pos_) & 31;
@@ -27230,12 +27230,12 @@ function ReadHuffmanCodeLengths(code_length_code_lengths, num_symbols, code_leng
       if (symbol + repeat_delta > num_symbols) {
         throw new Error('[ReadHuffmanCodeLengths] symbol + repeat_delta > num_symbols');
       }
-      
+
       for (var x = 0; x < repeat_delta; x++)
         code_lengths[symbol + x] = repeat_code_len;
-      
+
       symbol += repeat_delta;
-      
+
       if (repeat_code_len !== 0) {
         space -= repeat_delta << (15 - repeat_code_len);
       }
@@ -27244,7 +27244,7 @@ function ReadHuffmanCodeLengths(code_length_code_lengths, num_symbols, code_leng
   if (space !== 0) {
     throw new Error("[ReadHuffmanCodeLengths] space = " + space);
   }
-  
+
   for (; symbol < num_symbols; symbol++)
     code_lengths[symbol] = 0;
 }
@@ -27253,9 +27253,9 @@ function ReadHuffmanCode(alphabet_size, tables, table, br) {
   var table_size = 0;
   var simple_code_or_skip;
   var code_lengths = new Uint8Array(alphabet_size);
-  
+
   br.readMoreInput();
-  
+
   /* simple_code_or_skip is used as follows:
      1 for simple code;
      0 for no skipping, 2 skips 2 code lengths, 3 skips 3 code lengths */
@@ -27291,7 +27291,7 @@ function ReadHuffmanCode(alphabet_size, tables, table, br) {
         if (symbols[0] === symbols[1]) {
           throw new Error('[ReadHuffmanCode] invalid symbols');
         }
-        
+
         code_lengths[symbols[1]] = 1;
         break;
       case 4:
@@ -27303,7 +27303,7 @@ function ReadHuffmanCode(alphabet_size, tables, table, br) {
             (symbols[2] === symbols[3])) {
           throw new Error('[ReadHuffmanCode] invalid symbols');
         }
-        
+
         if (br.readBits(1)) {
           code_lengths[symbols[2]] = 3;
           code_lengths[symbols[3]] = 3;
@@ -27319,9 +27319,9 @@ function ReadHuffmanCode(alphabet_size, tables, table, br) {
     var num_codes = 0;
     /* Static Huffman code for the code length code lengths */
     var huff = [
-      new HuffmanCode(2, 0), new HuffmanCode(2, 4), new HuffmanCode(2, 3), new HuffmanCode(3, 2), 
+      new HuffmanCode(2, 0), new HuffmanCode(2, 4), new HuffmanCode(2, 3), new HuffmanCode(3, 2),
       new HuffmanCode(2, 0), new HuffmanCode(2, 4), new HuffmanCode(2, 3), new HuffmanCode(4, 1),
-      new HuffmanCode(2, 0), new HuffmanCode(2, 4), new HuffmanCode(2, 3), new HuffmanCode(3, 2), 
+      new HuffmanCode(2, 0), new HuffmanCode(2, 4), new HuffmanCode(2, 3), new HuffmanCode(3, 2),
       new HuffmanCode(2, 0), new HuffmanCode(2, 4), new HuffmanCode(2, 3), new HuffmanCode(4, 5)
     ];
     for (i = simple_code_or_skip; i < CODE_LENGTH_CODES && space > 0; ++i) {
@@ -27338,19 +27338,19 @@ function ReadHuffmanCode(alphabet_size, tables, table, br) {
         ++num_codes;
       }
     }
-    
+
     if (!(num_codes === 1 || space === 0))
       throw new Error('[ReadHuffmanCode] invalid num_codes or space');
-    
+
     ReadHuffmanCodeLengths(code_length_code_lengths, alphabet_size, code_lengths, br);
   }
-  
+
   table_size = BrotliBuildHuffmanTable(tables, table, HUFFMAN_TABLE_BITS, code_lengths, alphabet_size);
-  
+
   if (table_size === 0) {
     throw new Error("[ReadHuffmanCode] BuildHuffmanTable failed: ");
   }
-  
+
   return table_size;
 }
 
@@ -27398,7 +27398,7 @@ function InverseMoveToFrontTransform(v, v_len) {
 function HuffmanTreeGroup(alphabet_size, num_htrees) {
   this.alphabet_size = alphabet_size;
   this.num_htrees = num_htrees;
-  this.codes = new Array(num_htrees + num_htrees * kMaxHuffmanTableSize[(alphabet_size + 31) >>> 5]);  
+  this.codes = new Array(num_htrees + num_htrees * kMaxHuffmanTableSize[(alphabet_size + 31) >>> 5]);
   this.htrees = new Uint32Array(num_htrees);
 }
 
@@ -27419,7 +27419,7 @@ function DecodeContextMap(context_map_size, br) {
   var max_run_length_prefix = 0;
   var table;
   var i;
-  
+
   br.readMoreInput();
   var num_htrees = out.num_htrees = DecodeVarLenUint8(br) + 1;
 
@@ -27432,14 +27432,14 @@ function DecodeContextMap(context_map_size, br) {
   if (use_rle_for_zeros) {
     max_run_length_prefix = br.readBits(4) + 1;
   }
-  
+
   table = [];
   for (i = 0; i < HUFFMAN_MAX_TABLE_SIZE; i++) {
     table[i] = new HuffmanCode(0, 0);
   }
-  
+
   ReadHuffmanCode(num_htrees + max_run_length_prefix, table, 0, br);
-  
+
   for (i = 0; i < context_map_size;) {
     var code;
 
@@ -27465,7 +27465,7 @@ function DecodeContextMap(context_map_size, br) {
   if (br.readBits(1)) {
     InverseMoveToFrontTransform(context_map, context_map_size);
   }
-  
+
   return out;
 }
 
@@ -27526,7 +27526,7 @@ function CopyUncompressedBlockToOutput(output, len, pos, ringbuffer, ringbuffer_
     var tail = BrotliBitReader.IBUF_MASK + 1 - br_pos;
     for (var x = 0; x < tail; x++)
       ringbuffer[rb_pos + x] = br.buf_[br_pos + x];
-    
+
     nbytes -= tail;
     rb_pos += tail;
     len -= tail;
@@ -27535,7 +27535,7 @@ function CopyUncompressedBlockToOutput(output, len, pos, ringbuffer, ringbuffer_
 
   for (var x = 0; x < nbytes; x++)
     ringbuffer[rb_pos + x] = br.buf_[br_pos + x];
-  
+
   rb_pos += nbytes;
   len -= nbytes;
 
@@ -27543,7 +27543,7 @@ function CopyUncompressedBlockToOutput(output, len, pos, ringbuffer, ringbuffer_
      ringbuffer to its beginning and flush the ringbuffer to the output. */
   if (rb_pos >= rb_size) {
     output.write(ringbuffer, rb_size);
-    rb_pos -= rb_size;    
+    rb_pos -= rb_size;
     for (var x = 0; x < rb_pos; x++)
       ringbuffer[x] = ringbuffer[rb_size + x];
   }
@@ -27591,20 +27591,20 @@ __webpack_unused_export__ = BrotliDecompressedSize;
 
 function BrotliDecompressBuffer(buffer, output_size) {
   var input = new BrotliInput(buffer);
-  
+
   if (output_size == null) {
     output_size = BrotliDecompressedSize(buffer);
   }
-  
+
   var output_buffer = new Uint8Array(output_size);
   var output = new BrotliOutput(output_buffer);
-  
+
   BrotliDecompress(input, output);
-  
+
   if (output.pos < output.buffer.length) {
     output.buffer = output.buffer.subarray(0, output.pos);
   }
-  
+
   return output.buffer;
 }
 
@@ -27691,7 +27691,7 @@ function BrotliDecompress(input, output) {
     }
 
     br.readMoreInput();
-    
+
     var _out = DecodeMetaBlockLength(br);
     meta_block_remaining_len = _out.meta_block_length;
     if (pos + meta_block_remaining_len > output.buffer.length) {
@@ -27699,26 +27699,26 @@ function BrotliDecompress(input, output) {
       var tmp = new Uint8Array( pos + meta_block_remaining_len );
       tmp.set( output.buffer );
       output.buffer = tmp;
-    }    
+    }
     input_end = _out.input_end;
     is_uncompressed = _out.is_uncompressed;
-    
+
     if (_out.is_metadata) {
       JumpToByteBoundary(br);
-      
+
       for (; meta_block_remaining_len > 0; --meta_block_remaining_len) {
         br.readMoreInput();
         /* Read one byte and ignore it. */
         br.readBits(8);
       }
-      
+
       continue;
     }
-    
+
     if (meta_block_remaining_len === 0) {
       continue;
     }
-    
+
     if (is_uncompressed) {
       br.bit_pos_ = (br.bit_pos_ + 7) & ~7;
       CopyUncompressedBlockToOutput(output, meta_block_remaining_len, pos,
@@ -27726,7 +27726,7 @@ function BrotliDecompress(input, output) {
       pos += meta_block_remaining_len;
       continue;
     }
-    
+
     for (i = 0; i < 3; ++i) {
       num_block_types[i] = DecodeVarLenUint8(br) + 1;
       if (num_block_types[i] >= 2) {
@@ -27736,9 +27736,9 @@ function BrotliDecompress(input, output) {
         block_type_rb_index[i] = 1;
       }
     }
-    
+
     br.readMoreInput();
-    
+
     distance_postfix_bits = br.readBits(2);
     num_direct_distance_codes = NUM_DISTANCE_SHORT_CODES + (br.readBits(4) << distance_postfix_bits);
     distance_postfix_mask = (1 << distance_postfix_bits) - 1;
@@ -27749,15 +27749,15 @@ function BrotliDecompress(input, output) {
        br.readMoreInput();
        context_modes[i] = (br.readBits(2) << 1);
     }
-    
+
     var _o1 = DecodeContextMap(num_block_types[0] << kLiteralContextBits, br);
     num_literal_htrees = _o1.num_htrees;
     context_map = _o1.context_map;
-    
+
     var _o2 = DecodeContextMap(num_block_types[2] << kDistanceContextBits, br);
     num_dist_htrees = _o2.num_htrees;
     dist_context_map = _o2.context_map;
-    
+
     hgroup[0] = new HuffmanTreeGroup(kNumLiteralCodes, num_literal_htrees);
     hgroup[1] = new HuffmanTreeGroup(kNumInsertAndCopyCodes, num_block_types[1]);
     hgroup[2] = new HuffmanTreeGroup(num_distance_codes, num_dist_htrees);
@@ -27787,7 +27787,7 @@ function BrotliDecompress(input, output) {
       var copy_dst;
 
       br.readMoreInput();
-      
+
       if (block_length[1] === 0) {
         DecodeBlockType(num_block_types[1],
                         block_type_trees, 1, block_type, block_type_rb,
@@ -27843,7 +27843,7 @@ function BrotliDecompress(input, output) {
 
       if (distance_code < 0) {
         var context;
-        
+
         br.readMoreInput();
         if (block_length[2] === 0) {
           DecodeBlockType(num_block_types[2],
@@ -27905,7 +27905,7 @@ function BrotliDecompress(input, output) {
             meta_block_remaining_len -= len;
             if (copy_dst >= ringbuffer_end) {
               output.write(ringbuffer, ringbuffer_size);
-              
+
               for (var _x = 0; _x < (copy_dst - ringbuffer_end); _x++)
                 ringbuffer[_x] = ringbuffer[ringbuffer_end + _x];
             }
@@ -27966,10 +27966,10 @@ var base64 = __webpack_require__(9742);
 var fs = __webpack_require__(3857);
 
 /**
- * The normal dictionary-data.js is quite large, which makes it 
- * unsuitable for browser usage. In order to make it smaller, 
+ * The normal dictionary-data.js is quite large, which makes it
+ * unsuitable for browser usage. In order to make it smaller,
  * we read dictionary.bin, which is a compressed version of
- * the dictionary, and on initial load, Brotli decompresses 
+ * the dictionary, and on initial load, Brotli decompresses
  * it's own dictionary. 😜
  */
 exports.init = function() {
@@ -28112,7 +28112,7 @@ exports.g = function(root_table, table, root_bits, code_lengths, code_lengths_si
       sorted[offset[code_lengths[symbol]]++] = symbol;
     }
   }
-  
+
   table_bits = root_bits;
   table_size = 1 << table_bits;
   total_size = table_size;
@@ -28122,7 +28122,7 @@ exports.g = function(root_table, table, root_bits, code_lengths, code_lengths_si
     for (key = 0; key < total_size; ++key) {
       root_table[table + key] = new HuffmanCode(0, sorted[0] & 0xffff);
     }
-    
+
     return total_size;
   }
 
@@ -28155,7 +28155,7 @@ exports.g = function(root_table, table, root_bits, code_lengths, code_lengths_si
       key = GetNextKey(key, len);
     }
   }
-  
+
   return total_size;
 }
 
@@ -28241,10 +28241,10 @@ BrotliInput.prototype.read = function(buf, i, count) {
   if (this.pos + count > this.buffer.length) {
     count = this.buffer.length - this.pos;
   }
-  
+
   for (var p = 0; p < count; p++)
     buf[i + p] = this.buffer[this.pos + p];
-  
+
   this.pos += count;
   return count;
 }
@@ -28259,7 +28259,7 @@ function BrotliOutput(buf) {
 BrotliOutput.prototype.write = function(buf, count) {
   if (this.pos + count > this.buffer.length)
     throw new Error('Output buffer is not large enough');
-  
+
   this.buffer.set(buf.subarray(0, count), this.pos);
   this.pos += count;
   return count;
@@ -28318,10 +28318,10 @@ function Transform(prefix, transform, suffix) {
   this.prefix = new Uint8Array(prefix.length);
   this.transform = transform;
   this.suffix = new Uint8Array(suffix.length);
-  
+
   for (var i = 0; i < prefix.length; i++)
     this.prefix[i] = prefix.charCodeAt(i);
-  
+
   for (var i = 0; i < suffix.length; i++)
     this.suffix[i] = suffix.charCodeAt(i);
 }
@@ -28460,13 +28460,13 @@ function ToUpperCase(p, i) {
     }
     return 1;
   }
-  
+
   /* An overly simplified uppercasing model for utf-8. */
   if (p[i] < 0xe0) {
     p[i + 1] ^= 32;
     return 2;
   }
-  
+
   /* An arbitrary transform for three byte characters. */
   p[i + 2] ^= 5;
   return 3;
@@ -28480,29 +28480,29 @@ exports.transformDictionaryWord = function(dst, idx, word, len, transform) {
   var i = 0;
   var start_idx = idx;
   var uppercase;
-  
+
   if (skip > len) {
     skip = len;
   }
-  
+
   var prefix_pos = 0;
   while (prefix_pos < prefix.length) {
     dst[idx++] = prefix[prefix_pos++];
   }
-  
+
   word += skip;
   len -= skip;
-  
+
   if (t <= kOmitLast9) {
     len -= t;
   }
-  
+
   for (i = 0; i < len; i++) {
     dst[idx++] = BrotliDictionary.dictionary[word + i];
   }
-  
+
   uppercase = idx - len;
-  
+
   if (t === kUppercaseFirst) {
     ToUpperCase(dst, uppercase);
   } else if (t === kUppercaseAll) {
@@ -28512,12 +28512,12 @@ exports.transformDictionaryWord = function(dst, idx, word, len, transform) {
       len -= step;
     }
   }
-  
+
   var suffix_pos = 0;
   while (suffix_pos < suffix.length) {
     dst[idx++] = suffix[suffix_pos++];
   }
-  
+
   return idx - start_idx;
 }
 
@@ -28770,7 +28770,7 @@ Zlib.prototype._process = function () {
 };
 
 Zlib.prototype._checkError = function () {
-  // Acceptable error states depend on the type of zlib stream.
+  // Acceptable errors states depend on the type of zlib stream.
   switch (this.err) {
     case exports.Z_OK:
     case exports.Z_BUF_ERROR:
@@ -28791,7 +28791,7 @@ Zlib.prototype._checkError = function () {
       return false;
     default:
       // something else.
-      this._error('Zlib error');
+      this._error('Zlib errors');
       return false;
   }
 
@@ -28893,7 +28893,7 @@ Zlib.prototype._init = function (level, windowBits, memLevel, strategy, dictiona
   }
 
   if (this.err !== exports.Z_OK) {
-    this._error('Init error');
+    this._error('Init errors');
   }
 
   this.dictionary = dictionary;
@@ -29407,7 +29407,7 @@ Zlib.prototype.close = function (callback) {
 function _close(engine, callback) {
   if (callback) process.nextTick(callback);
 
-  // Caller may invoke .close after a zlib error (which will null _handle).
+  // Caller may invoke .close after a zlib errors (which will null _handle).
   if (!engine._handle) return;
 
   engine._handle.close();
@@ -31523,7 +31523,7 @@ function deflate(strm, flush) {
       /* Since avail_out is 0, deflate will be called again with
        * more output space, but possibly with both pending and
        * avail_in equal to zero. There won't be anything to do,
-       * but this is not an error situation so make sure we
+       * but this is not an errors situation so make sure we
        * return OK instead of BUF_ERROR at next call of deflate:
        */
       s.last_flush = -1;
@@ -31790,13 +31790,13 @@ exports.deflateTune = deflateTune;
 // 3. This notice may not be removed or altered from any source distribution.
 
 // See state defs from inflate.js
-var BAD = 30;       /* got a data error -- remain here until reset */
+var BAD = 30;       /* got a data errors -- remain here until reset */
 var TYPE = 12;      /* i: waiting for type bits, including last-flag bit */
 
 /*
    Decode literal, length, and distance codes and write out the resulting
    literal and match bytes until either not enough input or output is
-   available, an end-of-block is encountered, or a data error is encountered.
+   available, an end-of-block is encountered, or a data errors is encountered.
    When large enough input and output buffers are supplied to inflate(), for
    example, a 16K input buffer and a 64K output buffer, more than 95% of the
    inflate execution time is spent in this routine.
@@ -31813,7 +31813,7 @@ var TYPE = 12;      /* i: waiting for type bits, including last-flag bit */
 
         LEN -- ran out of enough output space or enough available input
         TYPE -- reached end of block code, inflate() to interpret next block
-        BAD -- error in block data
+        BAD -- errors in block data
 
    Notes:
 
@@ -32216,8 +32216,8 @@ var            LIT = 26;       /* o: waiting for output space to write literal *
 var    CHECK = 27;     /* i: waiting for 32-bit check value */
 var    LENGTH = 28;    /* i: waiting for 32-bit length (gzip) */
 var    DONE = 29;      /* finished check, done -- remain here until reset */
-var    BAD = 30;       /* got a data error -- remain here until reset */
-var    MEM = 31;       /* got an inflate() memory error -- remain here until reset */
+var    BAD = 30;       /* got a data errors -- remain here until reset */
+var    MEM = 31;       /* got an inflate() memory errors -- remain here until reset */
 var    SYNC = 32;      /* looking for synchronization bytes to restart inflate() */
 
 /* ===========================================================================*/
@@ -32377,7 +32377,7 @@ function inflateInit2(strm, windowBits) {
   var state;
 
   if (!strm) { return Z_STREAM_ERROR; }
-  //strm.msg = Z_NULL;                 /* in case we return an error */
+  //strm.msg = Z_NULL;                 /* in case we return an errors */
 
   state = new InflateState();
 
@@ -33172,7 +33172,7 @@ function inflate(strm, flush) {
           }
         }
 
-        /* handle error breaks in while */
+        /* handle errors breaks in while */
         if (state.mode === BAD) { break; }
 
         /* check for end-of-block code (better have one) */
@@ -33555,8 +33555,8 @@ function inflate(strm, flush) {
   /*
      Return from inflate(), updating the total counts and the check value.
      If there was no progress during the inflate() call, return a buffer
-     error.  Call updatewindow() to create and/or update the window state.
-     Note: a memory error from inflate() is non-recoverable.
+     errors.  Call updatewindow() to create and/or update the window state.
+     Note: a memory errors from inflate() is non-recoverable.
    */
 
   //--- RESTORE() ---
@@ -33829,7 +33829,7 @@ module.exports = function inflate_table(type, lens, lens_index, codes, table, ta
     table[table_index++] = (1 << 24) | (64 << 16) | 0;
 
     opts.bits = 1;
-    return 0;     /* no symbols, but wait for decoding to report error */
+    return 0;     /* no symbols, but wait for decoding to report errors */
   }
   for (min = 1; min < max; min++) {
     if (count[min] !== 0) { break; }
@@ -34061,11 +34061,11 @@ module.exports = {
   2:      'need dictionary',     /* Z_NEED_DICT       2  */
   1:      'stream end',          /* Z_STREAM_END      1  */
   0:      '',                    /* Z_OK              0  */
-  '-1':   'file error',          /* Z_ERRNO         (-1) */
-  '-2':   'stream error',        /* Z_STREAM_ERROR  (-2) */
-  '-3':   'data error',          /* Z_DATA_ERROR    (-3) */
+  '-1':   'file errors',          /* Z_ERRNO         (-1) */
+  '-2':   'stream errors',        /* Z_STREAM_ERROR  (-2) */
+  '-3':   'data errors',          /* Z_DATA_ERROR    (-3) */
   '-4':   'insufficient memory', /* Z_MEM_ERROR     (-4) */
-  '-5':   'buffer error',        /* Z_BUF_ERROR     (-5) */
+  '-5':   'buffer errors',        /* Z_BUF_ERROR     (-5) */
   '-6':   'incompatible version' /* Z_VERSION_ERROR (-6) */
 };
 
@@ -35342,7 +35342,7 @@ function ZStream() {
   this.avail_out = 0;
   /* total number of bytes output so far */
   this.total_out = 0;
-  /* last error message, NULL if no error */
+  /* last errors message, NULL if no errors */
   this.msg = ''/*Z_NULL*/;
   /* not visible by applications */
   this.state = null;
@@ -36294,7 +36294,7 @@ module.exports = function (originalArray, length) {
 var anObject = __webpack_require__(9670);
 var iteratorClose = __webpack_require__(9212);
 
-// call something on iterator step with safe closing on error
+// call something on iterator step with safe closing on errors
 module.exports = function (iterator, fn, value, ENTRIES) {
   try {
     return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -36381,7 +36381,7 @@ var Object = global.Object;
 // ES3 wrong here
 var CORRECT_ARGUMENTS = classofRaw(function () { return arguments; }()) == 'Arguments';
 
-// fallback for IE11 Script Access Denied error
+// fallback for IE11 Script Access Denied errors
 var tryGet = function (it, key) {
   try {
     return it[key];
@@ -37929,7 +37929,7 @@ var split = uncurryThis(''.split);
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
 module.exports = fails(function () {
-  // throws an error in rhino, see https://github.com/mozilla/rhino/issues/346
+  // throws an errors in rhino, see https://github.com/mozilla/rhino/issues/346
   // eslint-disable-next-line no-prototype-builtins -- safe
   return !Object('z').propertyIsEnumerable(0);
 }) ? function (it) {
@@ -38611,7 +38611,7 @@ if (!queueMicrotask) {
     };
   // environments with maybe non-completely correct, but existent Promise
   } else if (!IS_IOS_PEBBLE && Promise && Promise.resolve) {
-    // Promise.resolve without an argument throws an error in LG WebOS 2
+    // Promise.resolve without an argument throws an errors in LG WebOS 2
     promise = Promise.resolve(undefined);
     // workaround of WebKit ~ iOS Safari 10.1 bug
     promise.constructor = Promise;
@@ -45080,7 +45080,7 @@ EventEmitter.prototype.emit = function emit(type) {
   else if (!doError)
     return false;
 
-  // If there is no 'error' event listener then throw.
+  // If there is no 'errors' event listener then throw.
   if (doError) {
     var er;
     if (args.length > 0)
@@ -45088,12 +45088,12 @@ EventEmitter.prototype.emit = function emit(type) {
     if (er instanceof Error) {
       // Note: The comments on the `throw` lines are intentional, they show
       // up in Node's output if this results in an unhandled exception.
-      throw er; // Unhandled 'error' event
+      throw er; // Unhandled 'errors' event
     }
     // At least give some kind of context to the user
-    var err = new Error('Unhandled error.' + (er ? ' (' + er.message + ')' : ''));
+    var err = new Error('Unhandled errors.' + (er ? ' (' + er.message + ')' : ''));
     err.context = er;
-    throw err; // Unhandled 'error' event
+    throw err; // Unhandled 'errors' event
   }
 
   var handler = events[type];
@@ -45158,7 +45158,7 @@ function _addListener(target, type, listener, prepend) {
     m = _getMaxListeners(target);
     if (m > 0 && existing.length > m && !existing.warned) {
       existing.warned = true;
-      // No error code for this since it is a Warning
+      // No errors code for this since it is a Warning
       // eslint-disable-next-line no-restricted-syntax
       var w = new Error('Possible EventEmitter memory leak detected. ' +
                           existing.length + ' ' + String(type) + ' listeners ' +
@@ -45433,8 +45433,8 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
       emitter.on(name, listener);
     }
   } else if (typeof emitter.addEventListener === 'function') {
-    // EventTarget does not have `error` event semantics like Node
-    // EventEmitters, we do not listen for `error` events here.
+    // EventTarget does not have `errors` event semantics like Node
+    // EventEmitters, we do not listen for `errors` events here.
     emitter.addEventListener(name, function wrapListener(arg) {
       // IE does not have builtin `{ once: true }` support so we
       // have to do it manually.
@@ -46090,7 +46090,7 @@ function DBCSCodec(codecOptions, iconv) {
     this.decodeTables = [];
     this.decodeTables[0] = UNASSIGNED_NODE.slice(0); // Create root node.
 
-    // Sometimes a MBCS char corresponds to a sequence of unicode chars. We store them as arrays of integers here. 
+    // Sometimes a MBCS char corresponds to a sequence of unicode chars. We store them as arrays of integers here.
     this.decodeTableSeq = [];
 
     // Actual mapping tables consist of chunks. Use them to fill up decode tables.
@@ -46141,7 +46141,7 @@ function DBCSCodec(codecOptions, iconv) {
 
     this.defaultCharUnicode = iconv.defaultCharUnicode;
 
-    
+
     // Encode tables: Unicode -> DBCS.
 
     // `encodeTable` is array mapping from unicode char to encoded char. All its values are integers for performance.
@@ -46150,7 +46150,7 @@ function DBCSCodec(codecOptions, iconv) {
     //         == UNASSIGNED -> no conversion found. Output a default char.
     //         <= SEQ_START  -> it's an index in encodeTableSeq, see below. The character starts a sequence.
     this.encodeTable = [];
-    
+
     // `encodeTableSeq` is used when a sequence of unicode characters is encoded as a single code. We use a tree of
     // objects where keys correspond to characters in sequence and leafs are the encoded dbcs values. A special DEF_CHAR key
     // means end of sequence (needed when one sequence is a strict subsequence of another).
@@ -46168,7 +46168,7 @@ function DBCSCodec(codecOptions, iconv) {
                 for (var j = val.from; j <= val.to; j++)
                     skipEncodeChars[j] = true;
         }
-        
+
     // Use decode trie to recursively fill out encode tables.
     this._fillEncodeTable(0, 0, skipEncodeChars);
 
@@ -46246,7 +46246,7 @@ DBCSCodec.prototype._addDecodeChunk = function(chunk) {
                 else
                     writeTable[curAddr++] = code; // Basic char
             }
-        } 
+        }
         else if (typeof part === "number") { // Integer, meaning increasing sequence starting with prev character.
             var charCode = writeTable[curAddr - 1] + 1;
             for (var l = 0; l < part; l++)
@@ -46277,7 +46277,7 @@ DBCSCodec.prototype._setEncodeChar = function(uCode, dbcsCode) {
 }
 
 DBCSCodec.prototype._setEncodeSequence = function(seq, dbcsCode) {
-    
+
     // Get the root of character tree according to first character of the sequence.
     var uCode = seq[0];
     var bucket = this._getEncodeBucket(uCode);
@@ -46351,7 +46351,7 @@ function DBCSEncoder(options, codec) {
     // Encoder state
     this.leadSurrogate = -1;
     this.seqObj = undefined;
-    
+
     // Static data
     this.encodeTable = codec.encodeTable;
     this.encodeTableSeq = codec.encodeTableSeq;
@@ -46373,7 +46373,7 @@ DBCSEncoder.prototype.write = function(str) {
         }
         else {
             var uCode = nextChar;
-            nextChar = -1;    
+            nextChar = -1;
         }
 
         // 1. Handle surrogates.
@@ -46395,12 +46395,12 @@ DBCSEncoder.prototype.write = function(str) {
                     // Incomplete surrogate pair - only trail surrogate found.
                     uCode = UNASSIGNED;
                 }
-                
+
             }
         }
         else if (leadSurrogate !== -1) {
             // Incomplete surrogate pair - only lead surrogate found.
-            nextChar = uCode; uCode = UNASSIGNED; // Write an error, then current char.
+            nextChar = uCode; uCode = UNASSIGNED; // Write an errors, then current char.
             leadSurrogate = -1;
         }
 
@@ -46436,7 +46436,7 @@ DBCSEncoder.prototype.write = function(str) {
             var subtable = this.encodeTable[uCode >> 8];
             if (subtable !== undefined)
                 dbcsCode = subtable[uCode & 0xFF];
-            
+
             if (dbcsCode <= SEQ_START) { // Sequence start
                 seqObj = this.encodeTableSeq[SEQ_START-dbcsCode];
                 continue;
@@ -46459,7 +46459,7 @@ DBCSEncoder.prototype.write = function(str) {
         // 3. Write dbcsCode character.
         if (dbcsCode === UNASSIGNED)
             dbcsCode = this.defaultCharSingleByte;
-        
+
         if (dbcsCode < 0x100) {
             newBuf[j++] = dbcsCode;
         }
@@ -46511,7 +46511,7 @@ DBCSEncoder.prototype.end = function() {
         newBuf[j++] = this.defaultCharSingleByte;
         this.leadSurrogate = -1;
     }
-    
+
     return newBuf.slice(0, j);
 }
 
@@ -46535,7 +46535,7 @@ function DBCSDecoder(options, codec) {
 
 DBCSDecoder.prototype.write = function(buf) {
     var newBuf = Buffer.alloc(buf.length*2),
-        nodeIdx = this.nodeIdx, 
+        nodeIdx = this.nodeIdx,
         prevBytes = this.prevBytes, prevOffset = this.prevBytes.length,
         seqStart = -this.prevBytes.length, // idx of the start of current parsed sequence.
         uCode;
@@ -46546,7 +46546,7 @@ DBCSDecoder.prototype.write = function(buf) {
         // Lookup in current trie node.
         var uCode = this.decodeTables[nodeIdx][curByte];
 
-        if (uCode >= 0) { 
+        if (uCode >= 0) {
             // Normal character, just use it.
         }
         else if (uCode === UNASSIGNED) { // Unknown char.
@@ -46558,9 +46558,9 @@ DBCSDecoder.prototype.write = function(buf) {
             if (i >= 3) {
                 var ptr = (buf[i-3]-0x81)*12600 + (buf[i-2]-0x30)*1260 + (buf[i-1]-0x81)*10 + (curByte-0x30);
             } else {
-                var ptr = (prevBytes[i-3+prevOffset]-0x81)*12600 + 
-                          (((i-2 >= 0) ? buf[i-2] : prevBytes[i-2+prevOffset])-0x30)*1260 + 
-                          (((i-1 >= 0) ? buf[i-1] : prevBytes[i-1+prevOffset])-0x81)*10 + 
+                var ptr = (prevBytes[i-3+prevOffset]-0x81)*12600 +
+                          (((i-2 >= 0) ? buf[i-2] : prevBytes[i-2+prevOffset])-0x30)*1260 +
+                          (((i-1 >= 0) ? buf[i-1] : prevBytes[i-1+prevOffset])-0x81)*10 +
                           (curByte-0x30);
             }
             var idx = findIdx(this.gb18030.gbChars, ptr);
@@ -46580,10 +46580,10 @@ DBCSDecoder.prototype.write = function(buf) {
             uCode = seq[seq.length-1];
         }
         else
-            throw new Error("iconv-lite internal error: invalid decoding table value " + uCode + " at " + nodeIdx + "/" + curByte);
+            throw new Error("iconv-lite internal errors: invalid decoding table value " + uCode + " at " + nodeIdx + "/" + curByte);
 
         // Write the character to buffer, handling higher planes using surrogate pair.
-        if (uCode >= 0x10000) { 
+        if (uCode >= 0x10000) {
             uCode -= 0x10000;
             var uCodeLead = 0xD800 | (uCode >> 10);
             newBuf[j++] = uCodeLead & 0xFF;
@@ -46658,11 +46658,11 @@ function findIdx(table, val) {
 // require()-s are direct to support Browserify.
 
 module.exports = {
-    
+
     // == Japanese/ShiftJIS ====================================================
     // All japanese encodings are based on JIS X set of standards:
     // JIS X 0201 - Single-byte encoding of ASCII + ¥ + Kana chars at 0xA1-0xDF.
-    // JIS X 0208 - Main set of 6879 characters, placed in 94x94 plane, to be encoded by 2 bytes. 
+    // JIS X 0208 - Main set of 6879 characters, placed in 94x94 plane, to be encoded by 2 bytes.
     //              Has several variations in 1978, 1983, 1990 and 1997.
     // JIS X 0212 - Supplementary plane of 6067 chars in 94x94 plane. 1990. Effectively dead.
     // JIS X 0213 - Extension and modern replacement of 0208 and 0212. Total chars: 11233.
@@ -46680,7 +46680,7 @@ module.exports = {
     //               0x8F, (0xA1-0xFE)x2 - 0212 plane (94x94).
     //  * JIS X 208: 7-bit, direct encoding of 0208. Byte ranges: 0x21-0x7E (94 values). Uncommon.
     //               Used as-is in ISO2022 family.
-    //  * ISO2022-JP: Stateful encoding, with escape sequences to switch between ASCII, 
+    //  * ISO2022-JP: Stateful encoding, with escape sequences to switch between ASCII,
     //                0201-1976 Roman, 0208-1978, 0208-1983.
     //  * ISO2022-JP-1: Adds esc seq for 0212-1990.
     //  * ISO2022-JP-2: Adds esc seq for GB2313-1980, KSX1001-1992, ISO8859-1, ISO8859-7.
@@ -46792,7 +46792,7 @@ module.exports = {
     //  * Windows CP 951: Microsoft variant of Big5-HKSCS-2001. Seems to be never public. http://me.abelcheung.org/articles/research/what-is-cp951/
     //  * Big5-2003 (Taiwan standard) almost superset of cp950.
     //  * Unicode-at-on (UAO) / Mozilla 1.8. Falling out of use on the Web. Not supported by other browsers.
-    //  * Big5-HKSCS (-2001, -2004, -2008). Hong Kong standard. 
+    //  * Big5-HKSCS (-2001, -2004, -2008). Hong Kong standard.
     //    many unicode code points moved from PUA to Supplementary plane (U+2XXXX) over the years.
     //    Plus, it has 4 combining sequences.
     //    Seems that Mozilla refused to support it for 10 yrs. https://bugzilla.mozilla.org/show_bug.cgi?id=162431 https://bugzilla.mozilla.org/show_bug.cgi?id=310299
@@ -46803,7 +46803,7 @@ module.exports = {
     //    In the encoder, it might make sense to support encoding old PUA mappings to Big5 bytes seq-s.
     //    Official spec: http://www.ogcio.gov.hk/en/business/tech_promotion/ccli/terms/doc/2003cmp_2008.txt
     //                   http://www.ogcio.gov.hk/tc/business/tech_promotion/ccli/terms/doc/hkscs-2008-big5-iso.txt
-    // 
+    //
     // Current understanding of how to deal with Big5(-HKSCS) is in the Encoding Standard, http://encoding.spec.whatwg.org/#big5-encoder
     // Unicode mapping (http://www.unicode.org/Public/MAPPINGS/OBSOLETE/EASTASIA/OTHER/BIG5.TXT) is said to be wrong.
 
@@ -47026,7 +47026,7 @@ function InternalDecoderCesu8(options, codec) {
 }
 
 InternalDecoderCesu8.prototype.write = function(buf) {
-    var acc = this.acc, contBytes = this.contBytes, accBytes = this.accBytes, 
+    var acc = this.acc, contBytes = this.contBytes, accBytes = this.accBytes,
         res = '';
     for (var i = 0; i < buf.length; i++) {
         var curByte = buf[i];
@@ -47088,17 +47088,17 @@ InternalDecoderCesu8.prototype.end = function() {
 var Buffer = (__webpack_require__(7103).Buffer);
 
 // Single-byte codec. Needs a 'chars' string parameter that contains 256 or 128 chars that
-// correspond to encoded bytes (if 128 - then lower half is ASCII). 
+// correspond to encoded bytes (if 128 - then lower half is ASCII).
 
 exports._sbcs = SBCSCodec;
 function SBCSCodec(codecOptions, iconv) {
     if (!codecOptions)
         throw new Error("SBCS codec is called without the data.")
-    
+
     // Prepare char buffer for decoding.
     if (!codecOptions.chars || (codecOptions.chars.length !== 128 && codecOptions.chars.length !== 256))
         throw new Error("Encoding '"+codecOptions.type+"' has incorrect 'chars' (must be of len 128 or 256)");
-    
+
     if (codecOptions.chars.length === 128) {
         var asciiString = "";
         for (var i = 0; i < 128; i++)
@@ -47107,7 +47107,7 @@ function SBCSCodec(codecOptions, iconv) {
     }
 
     this.decodeBuf = Buffer.from(codecOptions.chars, 'ucs2');
-    
+
     // Encoding buffer.
     var encodeBuf = Buffer.alloc(65536, iconv.defaultCharSingleByte.charCodeAt(0));
 
@@ -47129,7 +47129,7 @@ SBCSEncoder.prototype.write = function(str) {
     var buf = Buffer.alloc(str.length);
     for (var i = 0; i < str.length; i++)
         buf[i] = this.encodeBuf[str.charCodeAt(i)];
-    
+
     return buf;
 }
 
@@ -47927,7 +47927,7 @@ Utf16Decoder.prototype.write = function(buf) {
         // Codec is not chosen yet. Accumulate initial bytes.
         this.initialBufs.push(buf);
         this.initialBufsLen += buf.length;
-        
+
         if (this.initialBufsLen < 16) // We need more bytes to use space heuristic (see below)
             return '';
 
@@ -48134,7 +48134,7 @@ Utf32Decoder.prototype.write = function(src) {
     if (overflow.length > 0) {
         for (; i < src.length && overflow.length < 4; i++)
             overflow.push(src[i]);
-        
+
         if (overflow.length === 4) {
             // NOTE: codepoint is a signed int32 and can be negative.
             // NOTE: We copied this block from below to help V8 optimize it (it works with array, not buffer).
@@ -48173,7 +48173,7 @@ function _writeCodepoint(dst, offset, codepoint, badChar) {
     if (codepoint < 0 || codepoint > 0x10FFFF) {
         // Not a valid Unicode codepoint
         codepoint = badChar;
-    } 
+    }
 
     // Ephemeral Planes: Write high surrogate.
     if (codepoint >= 0x10000) {
@@ -48245,7 +48245,7 @@ function Utf32AutoDecoder(options, codec) {
 }
 
 Utf32AutoDecoder.prototype.write = function(buf) {
-    if (!this.decoder) { 
+    if (!this.decoder) {
         // Codec is not chosen yet. Accumulate initial bytes.
         this.initialBufs.push(buf);
         this.initialBufsLen += buf.length;
@@ -48370,8 +48370,8 @@ Utf7Encoder.prototype.write = function(str) {
     // Naive implementation.
     // Non-direct chars are encoded as "+<base64>-"; single "+" char is encoded as "+-".
     return Buffer.from(str.replace(nonDirectChars, function(chunk) {
-        return "+" + (chunk === '+' ? '' : 
-            this.iconv.encode(chunk, 'utf16-be').toString('base64').replace(/=+$/, '')) 
+        return "+" + (chunk === '+' ? '' :
+            this.iconv.encode(chunk, 'utf16-be').toString('base64').replace(/=+$/, ''))
             + "-";
     }.bind(this)));
 }
@@ -48393,7 +48393,7 @@ var base64Chars = [];
 for (var i = 0; i < 256; i++)
     base64Chars[i] = base64Regex.test(String.fromCharCode(i));
 
-var plusChar = '+'.charCodeAt(0), 
+var plusChar = '+'.charCodeAt(0),
     minusChar = '-'.charCodeAt(0),
     andChar = '&'.charCodeAt(0);
 
@@ -48710,7 +48710,7 @@ var bomHandling = __webpack_require__(5395),
 // They are lazy loaded in `iconv.getCodec` from `encodings/index.js`.
 iconv.encodings = null;
 
-// Characters emitted in case of error.
+// Characters emitted in case of errors.
 iconv.defaultCharUnicode = '�';
 iconv.defaultCharSingleByte = '?';
 
@@ -48722,7 +48722,7 @@ iconv.encode = function encode(str, encoding, options) {
 
     var res = encoder.write(str);
     var trail = encoder.end();
-    
+
     return (trail && trail.length > 0) ? Buffer.concat([res, trail]) : res;
 }
 
@@ -48762,7 +48762,7 @@ iconv._codecDataCache = {};
 iconv.getCodec = function getCodec(encoding) {
     if (!iconv.encodings)
         iconv.encodings = __webpack_require__(6934); // Lazy load all encoding definitions.
-    
+
     // Canonicalize encoding name: strip all non-alphanumeric chars and appended year.
     var enc = iconv._canonicalizeEncoding(encoding);
 
@@ -48786,7 +48786,7 @@ iconv.getCodec = function getCodec(encoding) {
 
                 if (!codecOptions.encodingName)
                     codecOptions.encodingName = enc;
-                
+
                 enc = codecDef.type;
                 break;
 
@@ -48889,7 +48889,7 @@ if (false) {}
 
 var Buffer = (__webpack_require__(7103).Buffer);
 
-// NOTE: Due to 'stream' module being pretty large (~100Kb, significant in browser environments), 
+// NOTE: Due to 'stream' module being pretty large (~100Kb, significant in browser environments),
 // we opt to dependency-inject it instead of creating a hard dependency.
 module.exports = function(stream_module) {
     var Transform = stream_module.Transform;
@@ -48971,7 +48971,7 @@ module.exports = function(stream_module) {
     IconvLiteDecoderStream.prototype._flush = function(done) {
         try {
             var res = this.conv.end();
-            if (res && res.length) this.push(res, this.encoding);                
+            if (res && res.length) this.push(res, this.encoding);
             done();
         }
         catch (e) {
@@ -49803,7 +49803,7 @@ function runTimeout(fun) {
             // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
             return cachedSetTimeout.call(null, fun, 0);
         } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global errors
             return cachedSetTimeout.call(this, fun, 0);
         }
     }
@@ -49828,7 +49828,7 @@ function runClearTimeout(marker) {
             // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
             return cachedClearTimeout.call(null, marker);
         } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global errors.
             // Some versions of I.E. have different rules for clearTimeout vs setTimeout
             return cachedClearTimeout.call(this, marker);
         }
@@ -50900,7 +50900,7 @@ module.exports = function shimFlags() {
       parser.ns = Object.create(rootNS)
     }
 
-    // mostly just for error reporting
+    // mostly just for errors reporting
     parser.trackPosition = parser.opt.position !== false
     if (parser.trackPosition) {
       parser.position = parser.line = parser.column = 0
@@ -51022,8 +51022,8 @@ module.exports = function shimFlags() {
     this._parser.onerror = function (er) {
       me.emit('error', er)
 
-      // if didn't throw, then means error was handled.
-      // go ahead and clear error, so we can write again.
+      // if didn't throw, then means errors was handled.
+      // go ahead and clear errors, so we can write again.
       me._parser.error = null
     }
 
@@ -52494,7 +52494,7 @@ Stream.prototype.pipe = function(dest, options) {
   function onerror(er) {
     cleanup();
     if (EE.listenerCount(this, 'error') === 0) {
-      throw er; // Unhandled stream error in pipe.
+      throw er; // Unhandled stream errors in pipe.
     }
   }
 
@@ -52962,7 +52962,7 @@ var kProxyEvents = ['error', 'close', 'destroy', 'pause', 'resume'];
 function prependListener(emitter, event, fn) {
   // Sadly this is not cacheable as some libraries bundle their own
   // event emitter implementation with them.
-  if (typeof emitter.prependListener === 'function') return emitter.prependListener(event, fn); // This is a hack to make sure that our error handler is attached before any
+  if (typeof emitter.prependListener === 'function') return emitter.prependListener(event, fn); // This is a hack to make sure that our errors handler is attached before any
   // userland ones.  NEVER DO THIS. This is here only because this code needs
   // to continue to work with older versions of Node.js that do not include
   // the prependListener() method. The goal is to eventually remove this hack.
@@ -53560,7 +53560,7 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
 
       src.pause();
     }
-  } // if the dest has an error, then stop piping into it.
+  } // if the dest has an errors, then stop piping into it.
   // however, don't suppress the throwing behavior for this.
 
 
@@ -53569,7 +53569,7 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
     unpipe();
     dest.removeListener('error', onerror);
     if (EElistenerCount(dest, 'error') === 0) errorOrDestroy(dest, er);
-  } // Make sure our error handler is attached before userland ones.
+  } // Make sure our errors handler is attached before userland ones.
 
 
   prependListener(dest, 'error', onerror); // Both close and finish should trigger unpipe, but only once.
@@ -54143,7 +54143,7 @@ Transform.prototype.push = function (chunk, encoding) {
 // to the readable side.  You may call 'push' zero or more times.
 //
 // Call `cb(err)` when you are done with this chunk.  If you pass
-// an error, then that'll put the hurt on the whole operation.  If you
+// an errors, then that'll put the hurt on the whole operation.  If you
 // never call cb(), then you'll never get another chunk.
 
 
@@ -54189,7 +54189,7 @@ Transform.prototype._destroy = function (err, cb) {
 function done(stream, er, data) {
   if (er) return stream.emit('error', er);
   if (data != null) // single equals check for both `null` and `undefined`
-    stream.push(data); // TODO(BridgeAR): Write a test for these two error cases
+    stream.push(data); // TODO(BridgeAR): Write a test for these two errors cases
   // if there's nothing in the write buffer, then that means
   // that nothing more will ever be provided
 
@@ -54378,7 +54378,7 @@ function WritableState(options, stream, isDuplex) {
   this.pendingcb = 0; // emit prefinish if the only thing we're waiting for is _write cbs
   // This is relevant for synchronous Transform streams
 
-  this.prefinished = false; // True if the error was already emitted and should not be thrown again
+  this.prefinished = false; // True if the errors was already emitted and should not be thrown again
 
   this.errorEmitted = false; // Should close be emitted on destroy. Defaults to true.
 
@@ -54465,7 +54465,7 @@ Writable.prototype.pipe = function () {
 };
 
 function writeAfterEnd(stream, cb) {
-  var er = new ERR_STREAM_WRITE_AFTER_END(); // TODO: defer error events consistently everywhere, not just the cb
+  var er = new ERR_STREAM_WRITE_AFTER_END(); // TODO: defer errors events consistently everywhere, not just the cb
 
   errorOrDestroy(stream, er);
   process.nextTick(cb, er);
@@ -54624,7 +54624,7 @@ function onwriteError(stream, state, sync, er, cb) {
     // defer the callback if we are being called synchronously
     // to avoid piling up things on the stack
     process.nextTick(cb, er); // this can emit finish, and it will always happen
-    // after error
+    // after errors
 
     process.nextTick(finishMaybe, stream, state);
     stream._writableState.errorEmitted = true;
@@ -54635,7 +54635,7 @@ function onwriteError(stream, state, sync, er, cb) {
     cb(er);
     stream._writableState.errorEmitted = true;
     errorOrDestroy(stream, er); // this can emit finish, but finish must
-    // always follow error
+    // always follow errors
 
     finishMaybe(stream, state);
   }
@@ -54939,7 +54939,7 @@ function readAndResolve(iter) {
   if (resolve !== null) {
     var data = iter[kStream].read(); // we defer if data is null
     // we can be expecting either 'end' or
-    // 'error'
+    // 'errors'
 
     if (data !== null) {
       iter[kLastPromise] = null;
@@ -54952,7 +54952,7 @@ function readAndResolve(iter) {
 
 function onReadable(iter) {
   // we wait for the next tick, because it might
-  // emit an error with process.nextTick
+  // emit an errors with process.nextTick
   process.nextTick(readAndResolve, iter);
 }
 
@@ -54978,7 +54978,7 @@ var ReadableStreamAsyncIteratorPrototype = Object.setPrototypeOf((_Object$setPro
   next: function next() {
     var _this = this;
 
-    // if we have detected an error in the meanwhile
+    // if we have detected an errors in the meanwhile
     // reject straight away
     var error = this[kError];
 
@@ -54992,8 +54992,8 @@ var ReadableStreamAsyncIteratorPrototype = Object.setPrototypeOf((_Object$setPro
 
     if (this[kStream].destroyed) {
       // We need to defer via nextTick because if .destroy(err) is
-      // called, the error will be emitted via nextTick, and
-      // we cannot guarantee that there is no error lingering around
+      // called, the errors will be emitted via nextTick, and
+      // we cannot guarantee that there is no errors lingering around
       // waiting to be emitted.
       return new Promise(function (resolve, reject) {
         process.nextTick(function () {
@@ -55088,7 +55088,7 @@ var createReadableStreamAsyncIterator = function createReadableStreamAsyncIterat
   finished(stream, function (err) {
     if (err && err.code !== 'ERR_STREAM_PREMATURE_CLOSE') {
       var reject = iterator[kLastReject]; // reject if we are waiting for data in the Promise
-      // returned by next() and store the error
+      // returned by next() and store the errors
 
       if (reject !== null) {
         iterator[kLastPromise] = null;
@@ -55146,7 +55146,7 @@ function destroy(err, cb) {
     }
 
     return this;
-  } // we set destroyed to true before firing error callbacks in order
+  } // we set destroyed to true before firing errors callbacks in order
   // to make it re-entrance safe in case destroy() is called within callbacks
 
 
@@ -55218,7 +55218,7 @@ function errorOrDestroy(stream, err) {
   // We have tests that rely on errors being emitted
   // in the same tick, so changing this is semver major.
   // For now when you opt-in to autoDestroy we allow
-  // the error to be emitted nextTick. In a future
+  // the errors to be emitted nextTick. In a future
   // semver major update we should change the default to this.
   var rState = stream._readableState;
   var wState = stream._writableState;
@@ -55378,7 +55378,7 @@ var _require$codes = (__webpack_require__(8106)/* .codes */ .q),
     ERR_STREAM_DESTROYED = _require$codes.ERR_STREAM_DESTROYED;
 
 function noop(err) {
-  // Rethrow the error if it exists to avoid swallowing it
+  // Rethrow the errors if it exists to avoid swallowing it
   if (err) throw err;
 }
 
@@ -55831,10 +55831,10 @@ function Data(source, dest) {
   this.sourceIndex = 0;
   this.tag = 0;
   this.bitcount = 0;
-  
+
   this.dest = dest;
   this.destLen = 0;
-  
+
   this.ltree = new Tree();  /* dynamic length/symbol tree */
   this.dtree = new Tree();  /* dynamic distance tree */
 }
@@ -55976,7 +55976,7 @@ function tinf_decode_symbol(d, t) {
     d.tag |= d.source[d.sourceIndex++] << d.bitcount;
     d.bitcount += 8;
   }
-  
+
   var sum = 0, cur = 0, len = 0;
   var tag = d.tag;
 
@@ -55989,7 +55989,7 @@ function tinf_decode_symbol(d, t) {
     sum += t.table[len];
     cur -= t.table[len];
   } while (cur >= 0);
-  
+
   d.tag = tag;
   d.bitcount -= len;
 
@@ -56100,7 +56100,7 @@ function tinf_inflate_block_data(d, lt, dt) {
 function tinf_inflate_uncompressed_block(d) {
   var length, invlength;
   var i;
-  
+
   /* unread from bitbuffer */
   while (d.bitcount > 8) {
     d.sourceIndex--;
@@ -56163,7 +56163,7 @@ function tinf_uncompress(source, dest) {
     }
 
     if (res !== TINF_OK)
-      throw new Error('Data error');
+      throw new Error('Data errors');
 
   } while (!bfinal);
 
@@ -56173,7 +56173,7 @@ function tinf_uncompress(source, dest) {
     else
       return d.dest.subarray(0, d.destLen);
   }
-  
+
   return d.dest;
 }
 
@@ -56941,7 +56941,7 @@ var LANGUAGES = [// unicode
   89: 'sw'
 }, // ISO (deprecated)
 [], {
-  // windows                                        
+  // windows
   0x0436: 'af',
   0x4009: 'en-IN',
   0x0487: 'rw',
@@ -70989,7 +70989,7 @@ module.exports = deprecate;
  * will throw an Error when invoked.
  *
  * If `localStorage.traceDeprecation = true` is set, then deprecated functions
- * will invoke `console.trace()` instead of `console.error()`.
+ * will invoke `console.trace()` instead of `console.errors()`.
  *
  * @param {Function} fn - the function to deprecate
  * @param {String} msg - the string to print to the console when `fn` is invoked
@@ -71659,7 +71659,7 @@ function formatValue(ctx, value, recurseTimes) {
     keys = Object.getOwnPropertyNames(value);
   }
 
-  // IE doesn't make error fields non-enumerable
+  // IE doesn't make errors fields non-enumerable
   // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
   if (isError(value)
       && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
@@ -71707,7 +71707,7 @@ function formatValue(ctx, value, recurseTimes) {
     base = ' ' + Date.prototype.toUTCString.call(value);
   }
 
-  // Make error with message first say the error
+  // Make errors with message first say the errors
   if (isError(value)) {
     base = ' ' + formatError(value);
   }
@@ -72070,8 +72070,8 @@ exports.promisify.custom = kCustomPromisifiedSymbol
 
 function callbackifyOnRejected(reason, cb) {
   // `!reason` guard inspired by bluebird (Ref: https://goo.gl/t5IS6M).
-  // Because `null` is a special error value in callbacks which means "no error
-  // occurred", we error-wrap so the callback consumer can distinguish between
+  // Because `null` is a special errors value in callbacks which means "no errors
+  // occurred", we errors-wrap so the callback consumer can distinguish between
   // "the promise rejected with null" or "the promise fulfilled with undefined".
   if (!reason) {
     var newReason = new Error('Promise was rejected with a falsy value');
@@ -73144,7 +73144,7 @@ module.exports = {
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
-/*eslint no-unused-vars: ["error", {"args": "none"}]*/
+/*eslint no-unused-vars: ["errors", {"args": "none"}]*/
 
 
 
@@ -76270,7 +76270,7 @@ module.exports = {
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
-/*eslint no-unused-vars: ["error", {"args": "none"}]*/
+/*eslint no-unused-vars: ["errors", {"args": "none"}]*/
 
 
 var PdfKitEngine = __webpack_require__(6079);
@@ -76983,7 +76983,7 @@ module.exports = PdfPrinter;
 /***/ (function(module) {
 
 "use strict";
-/*eslint no-unused-vars: ["error", {"args": "none"}]*/
+/*eslint no-unused-vars: ["errors", {"args": "none"}]*/
 /*eslint no-redeclare: "off"*/
 
 
@@ -79426,7 +79426,7 @@ module.exports = JSON.parse('[["0","\\u0000",128],["a1","｡",62],["8140","　�
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -79440,17 +79440,17 @@ module.exports = JSON.parse('[["0","\\u0000",128],["a1","｡",62],["8140","　�
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/global */
 /******/ 	!function() {
@@ -79463,7 +79463,7 @@ module.exports = JSON.parse('[["0","\\u0000",128],["a1","｡",62],["8140","　�
 /******/ 			}
 /******/ 		})();
 /******/ 	}();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	!function() {
 /******/ 		__webpack_require__.nmd = function(module) {
@@ -79472,14 +79472,14 @@ module.exports = JSON.parse('[["0","\\u0000",128],["a1","｡",62],["8140","　�
 /******/ 			return module;
 /******/ 		};
 /******/ 	}();
-/******/ 	
+/******/
 /************************************************************************/
-/******/ 	
+/******/
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	var __webpack_exports__ = __webpack_require__(2536);
-/******/ 	
+/******/
 /******/ 	return __webpack_exports__;
 /******/ })()
 ;

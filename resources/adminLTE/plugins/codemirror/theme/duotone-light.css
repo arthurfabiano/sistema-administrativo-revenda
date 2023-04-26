@@ -28,7 +28,7 @@ CodeMirror template by Jan T. Sott (https://github.com/idleberg), adapted by Bra
 .cm-s-duotone-light span.cm-bracket, .cm-s-duotone-light span.cm-comment { color: #b6ad9a; }
 
 /* using #f00 red for errors, don't think any of the colorscheme variables will stand out enough, ... maybe by giving it a background-color ... */
-/* .cm-s-duotone-light span.cm-error { background: #896724; color: #728fcb; } */
+/* .cm-s-duotone-light span.cm-errors { background: #896724; color: #728fcb; } */
 .cm-s-duotone-light span.cm-error, .cm-s-duotone-light span.cm-invalidchar { color: #f00; }
 
 .cm-s-duotone-light span.cm-header { font-weight: normal; }

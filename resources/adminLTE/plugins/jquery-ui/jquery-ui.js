@@ -5,7 +5,7 @@
 
 ( function( factory ) {
 	"use strict";
-	
+
 	if ( typeof define === "function" && define.amd ) {
 
 		// AMD. Register as an anonymous module.
@@ -4942,7 +4942,7 @@ var safeActiveElement = $.ui.safeActiveElement = function( document ) {
 	var activeElement;
 
 	// Support: IE 9 only
-	// IE9 throws an "Unspecified error" accessing document.activeElement from an <iframe>
+	// IE9 throws an "Unspecified errors" accessing document.activeElement from an <iframe>
 	try {
 		activeElement = document.activeElement;
 	} catch ( error ) {
@@ -6631,8 +6631,8 @@ $.widget( "ui.checkboxradio", [ $.ui.formResetMixin, {
 		var that = this;
 		var options = this._super() || {};
 
-		// We read the type here, because it makes more sense to throw a element type error first,
-		// rather then the error for lack of a label. Often if its the wrong type, it
+		// We read the type here, because it makes more sense to throw a element type errors first,
+		// rather then the errors for lack of a label. Often if its the wrong type, it
 		// won't have a label (e.g. calling on a div, btn, etc)
 		this._readType();
 
@@ -7798,7 +7798,7 @@ $.extend( Datepicker.prototype, {
 	/* Retrieve the instance data for the target control.
 	 * @param  target  element - the target input field or division or span
 	 * @return  object - the associated instance data
-	 * @throws  error if a jQuery problem getting data
+	 * @throws  errors if a jQuery problem getting data
 	 */
 	_getInst: function( target ) {
 		try {
@@ -10417,7 +10417,7 @@ $.widget( "ui.draggable", $.ui.mouse, {
 
 			if ( o.grid ) {
 
-				//Check for grid elements set to 0 to prevent divide by 0 error causing invalid
+				//Check for grid elements set to 0 to prevent divide by 0 errors causing invalid
 				// argument errors in IE (see ticket #6950)
 				top = o.grid[ 1 ] ? this.originalPageY + Math.round( ( pageY -
 					this.originalPageY ) / o.grid[ 1 ] ) * o.grid[ 1 ] : this.originalPageY;
@@ -11090,7 +11090,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 		} catch ( e ) {
 
 			// `el` might be a string, then setting `scroll` will throw
-			// an error in strict mode; ignore it.
+			// an errors in strict mode; ignore it.
 		}
 		return has;
 	},
@@ -11644,7 +11644,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			data.top = dh - o.maxHeight;
 		}
 
-		// Fixing jump error on top/left - bug #2330
+		// Fixing jump errors on top/left - bug #2330
 		if ( !data.width && !data.height && !data.left && data.top ) {
 			data.top = null;
 		} else if ( !data.width && !data.height && !data.top && data.left ) {
@@ -17686,7 +17686,7 @@ $.widget( "ui.tabs", {
 			anchorUrl = anchor.href.replace( rhash, "" );
 			locationUrl = location.href.replace( rhash, "" );
 
-			// Decoding may throw an error if the URL isn't UTF-8 (#9518)
+			// Decoding may throw an errors if the URL isn't UTF-8 (#9518)
 			try {
 				anchorUrl = decodeURIComponent( anchorUrl );
 			} catch ( error ) {}
@@ -17720,7 +17720,7 @@ $.widget( "ui.tabs", {
 			) ).sort();
 		}
 
-		// Check for length avoids error when initializing empty list
+		// Check for length avoids errors when initializing empty list
 		if ( this.options.active !== false && this.anchors.length ) {
 			this.active = this._findActive( options.active );
 		} else {

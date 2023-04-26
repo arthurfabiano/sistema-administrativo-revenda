@@ -44,6 +44,16 @@ class MovimentoEstoque extends Model
         return $this->belongsTo(Produto::class);
     }
 
+    /**
+     * Configura a relacao com historico do saldo
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function saldo()
+    {
+        return $this->MorphOne(Saldo::class, 'movimento');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
